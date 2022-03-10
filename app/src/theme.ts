@@ -27,6 +27,81 @@ export const buildAppTheme = (): ITheme => {
         margin: '0',
       },
     },
+
+    buttons: {
+      default: {
+        normal: {
+          default: {
+            text: {
+              'font-size': '0.8em',
+            },
+          },
+        },
+      },
+      primary: {
+        normal: {
+          default: {
+            background: {
+              'background-color': 'rgba(255, 255, 255, 0.25)',
+              'border-color': 'rgba(255, 255, 255, 0.3)',
+              'border-width': '1px',
+            },
+            text: {
+              color: '$colors.textOnBrand',
+            },
+          },
+          hover: {
+            background: {
+              'background-color': 'rgba(255, 255, 255, 0.35)',
+            },
+          },
+          press: {
+            background: {
+              'background-color': 'rgba(255, 255, 255, 0.55)',
+            },
+          },
+          focus: {
+            background: {
+              'border-color': 'rgba(255, 255, 255, 0.75)',
+            },
+          },
+        },
+      },
+      secondary: {
+        normal: {
+          default: {
+            background: {
+              'border-color': '#ffffff',
+              'border-width': '1px',
+              'background-color': 'transparent',
+              'box-shadow': '0px 0px 5px 5px rgba(255, 255, 255, 0.35) ',
+
+
+            },
+            text: {
+              color: '#FFFFFF',
+              'text-shadow': '0px 0px 5px #FFFFFF ',
+            },
+          },
+          hover: {
+            background: {
+              'background-color': 'rgba(255, 255, 255, 0.35)',
+            },
+          },
+          press: {
+            background: {
+              'background-color': 'rgba(255, 255, 255, 0.55)',
+            },
+          },
+          focus: {
+            background: {
+              'border-color': 'rgba(255, 255, 255, 0.75)',
+            },
+          },
+        },
+      },
+    },
+
     selectableViews: {
       default: {
         normal: {
@@ -45,6 +120,7 @@ export const buildAppTheme = (): ITheme => {
             overlay: baseTheme.linkBases.default.normal.focus.background,
           },
         },
+
         selected: {
           default: {
             overlay: {
