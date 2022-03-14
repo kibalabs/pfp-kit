@@ -21,13 +21,22 @@ export const buildAppTheme = (): ITheme => {
       note: {
         color: '$colors.textClear50',
       },
+      header3: {
+        'font-size': '2.0rem',
+        'font-weight': '500',
+        'margin-bottom': '0.25em',
+        'text-shadow': '0px 0px 5px #F0F0F0',
+      },
     },
     boxes: {
       card: {
         margin: '0',
       },
+      wideBorder: {
+        margin: '0',
+        'box-shadow': '0px 0px 50px 20px rgba(255, 255, 255, 0.35) ',
+      },
     },
-
     buttons: {
       default: {
         normal: {
@@ -75,8 +84,6 @@ export const buildAppTheme = (): ITheme => {
               'border-width': '1px',
               'background-color': 'transparent',
               'box-shadow': '0px 0px 5px 5px rgba(255, 255, 255, 0.35) ',
-
-
             },
             text: {
               color: '#FFFFFF',
