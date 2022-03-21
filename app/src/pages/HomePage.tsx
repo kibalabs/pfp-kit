@@ -4,10 +4,14 @@ import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, Lay
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { ImageView } from '../components/ImageView';
+import { UpdateResult, UploadImage } from '../components/UploadFile';
+import { useGlobals } from '../globalsContext';
 import imageData from '../imageData.json';
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
+  const { web3StorageClient } = useGlobals();
+
   const [stage, setStage] = React.useState<number>(1);
   const [imageLink, setImageLink] = React.useState<string>('');
 
@@ -25,6 +29,22 @@ export const HomePage = (): React.ReactElement => {
     }
   };
 
+  const onImageFilesChosen = async (shouldUseIpfs: boolean, files: File[]): Promise<UpdateResult> => {
+    // TODO(krishan711): ensure there is only one file
+    const file = files[0];
+    if (shouldUseIpfs) {
+      try {
+        const cid = await web3StorageClient.put([file], { wrapWithDirectory: false });
+        const url = `https://ipfs.io/ipfs/${cid}`;
+        setImageLink(url);
+        setStage(2);
+        return { isSuccess: true, message: `ipfs://${cid}` };
+      } catch (error: unknown) {
+        console.error(error);
+        return { isSuccess: false, message: 'Failed to upload file to IPFS. Please try without IPFS whilst we look into what\'s happening.' };
+      }
+    } return { isSuccess: false, message: 'No file' };
+  };
   return (
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} padding={PaddingSize.Wide2} shouldAddGutters={true}>
@@ -45,6 +65,15 @@ export const HomePage = (): React.ReactElement => {
                       imageUrl={image.imageUrl}
                     />
                   ))}
+                  {onImageFilesChosen ? (
+                    <UploadImage
+                      onImageFilesChosen={onImageFilesChosen}
+                    />
+                  ) : (
+                    <Box variant='tokenCard' shouldClipContent={true} width='160px' height='160px'>
+                      <Image source={imageLink} alternativeText='image' fitType='contain' />
+                    </Box>
+                  )}
                 </Stack>
               </Stack>
             )}
