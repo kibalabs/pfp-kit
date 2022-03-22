@@ -39,6 +39,7 @@ export const HomePage = (): React.ReactElement => {
   const onImageFilesSelected = async (files: File[]): Promise<UpdateResult> => {
     // TODO(krishan711): ensure there is only one file
     const file = files[0];
+
     try {
       const cid = await web3StorageClient.put([file], { wrapWithDirectory: false });
       const url = `https://ipfs.io/ipfs/${cid}`;
