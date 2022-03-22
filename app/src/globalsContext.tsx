@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { IMultiAnyChildProps } from '@kibalabs/core-react';
+import { Web3Storage } from 'web3.storage';
 
 export interface IGlobals {
+  web3StorageClient: Web3Storage;
 }
 
 export const GlobalsContext = React.createContext<IGlobals | null>(null);

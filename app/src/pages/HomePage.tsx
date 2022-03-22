@@ -3,13 +3,24 @@ import React from 'react';
 import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, LayerContainer, PaddingSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
+import { Dropzone } from '../components/Dropzone';
 import { ImageView } from '../components/ImageView';
+import { useGlobals } from '../globalsContext';
 import imageData from '../imageData.json';
+
+export type UpdateResult = {
+  isSuccess: boolean;
+  message: string;
+}
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
+  const { web3StorageClient } = useGlobals();
+  const [isUploadingImage, setIsUploadingImage] = React.useState<boolean>(false);
+  const [updatingImageResult, setUpdatingImageResult] = React.useState<UpdateResult | null>(null);
+  const shouldUseIpfs = true;
   const [stage, setStage] = React.useState<number>(1);
-  const [imageLink, setImageLink] = React.useState<string>('');
+  const [imageUrl, setImageUrl] = React.useState<string>(null);
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
 
@@ -17,12 +28,37 @@ export const HomePage = (): React.ReactElement => {
     await onLinkAccountsClicked();
   };
 
-  const showImage = (imageUrl) => {
+  const onImageClicked = (tokenImageUrl: string): void => {
     setStage(2);
-    if (imageUrl?.startsWith('ipfs://')) {
-      const FormattedImageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
-      setImageLink(FormattedImageUrl);
+    if (tokenImageUrl?.startsWith('ipfs://')) {
+      const FormattedImageUrl = tokenImageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+      setImageUrl(FormattedImageUrl);
     }
+  };
+
+  const onImageFilesSelected = async (imageShouldUseIpfs: boolean, files: File[]): Promise<UpdateResult> => {
+    // TODO(krishan711): ensure there is only one file
+    const file = files[0];
+    if (imageShouldUseIpfs) {
+      try {
+        const cid = await web3StorageClient.put([file], { wrapWithDirectory: false });
+        const url = `https://ipfs.io/ipfs/${cid}`;
+        setImageUrl(url);
+        setStage(2);
+        return { isSuccess: true, message: `ipfs://${cid}` };
+      } catch (error: unknown) {
+        console.error(error);
+        return { isSuccess: false, message: 'Failed to upload file to IPFS. Please try without IPFS whilst we look into what\'s happening.' };
+      }
+    } return { isSuccess: false, message: 'Failed, kindly Upload to IPFS' };
+  };
+
+  const onImageFilesChosen = async (files: File[]): Promise<void> => {
+    setUpdatingImageResult(null);
+    setIsUploadingImage(true);
+    const result = await onImageFilesSelected(shouldUseIpfs, files);
+    setUpdatingImageResult(result);
+    setIsUploadingImage(false);
   };
 
   return (
@@ -39,12 +75,32 @@ export const HomePage = (): React.ReactElement => {
                 <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
                   {imageData && imageData.map((image, index: number) : React.ReactElement => (
                     <ImageView
-                      onClicked={showImage}
+                      onClicked={onImageClicked}
                       key={index}
                       name={image.name}
                       imageUrl={image.imageUrl}
                     />
                   ))}
+                  {imageUrl ? (
+                    <Box variant='tokenCard' shouldClipContent={true} width='160px' height='160px'>
+                      <Image source={imageUrl} alternativeText='image' fitType='contain' />
+                    </Box>
+                  ) : (
+                    <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldWrapItems={true}>
+                      {isUploadingImage ? (
+                        <Text>Uploading image...</Text>
+                      ) : (
+                        <Stack direction={Direction.Vertical} shouldAddGutters={true}>
+                          <Dropzone onFilesChosen={onImageFilesChosen} />
+                          <Text>Upload to IPFS</Text>
+                          {shouldUseIpfs && (<Text variant='note'>IPFS storage works best with files below 3MB</Text>)}
+                        </Stack>
+                      )}
+                      {updatingImageResult && !updatingImageResult.isSuccess && (
+                        <Text variant='error'>{updatingImageResult.message}</Text>
+                      )}
+                    </Stack>
+                  )}
                 </Stack>
               </Stack>
             )}
@@ -61,7 +117,7 @@ export const HomePage = (): React.ReactElement => {
                 </LayerContainer.Layer>
                 <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
                   <Box variant='rounded' shouldClipContent={true} width='130px' height='130px'>
-                    <Image source={imageLink} alternativeText='image' fitType='contain' />
+                    <Image source={imageUrl} alternativeText='image' fitType='contain' />
                   </Box>
                 </LayerContainer.Layer>
               </LayerContainer>
