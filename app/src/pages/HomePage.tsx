@@ -43,7 +43,7 @@ export const HomePage = (): React.ReactElement => {
         console.error(error);
         return { isSuccess: false, message: 'Failed to upload file to IPFS. Please try without IPFS whilst we look into what\'s happening.' };
       }
-    } return { isSuccess: false, message: 'No file' };
+    } return { isSuccess: false, message: 'Failed, kindly Upload to IPFS' };
   };
   return (
     <ContainingView>
