@@ -81,7 +81,11 @@ export const HomePage = (): React.ReactElement => {
                       imageUrl={image.imageUrl}
                     />
                   ))}
-                  {onImageFilesChosen ? (
+                  {imageUrl ? (
+                    <Box variant='tokenCard' shouldClipContent={true} width='160px' height='160px'>
+                      <Image source={imageUrl} alternativeText='image' fitType='contain' />
+                    </Box>
+                  ) : (
                     <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldWrapItems={true}>
                       {isUploadingImage ? (
                         <Text>Uploading image...</Text>
@@ -96,10 +100,6 @@ export const HomePage = (): React.ReactElement => {
                         <Text variant='error'>{updatingImageResult.message}</Text>
                       )}
                     </Stack>
-                  ) : (
-                    <Box variant='tokenCard' shouldClipContent={true} width='160px' height='160px'>
-                      <Image source={imageUrl} alternativeText='image' fitType='contain' />
-                    </Box>
                   )}
                 </Stack>
               </Stack>
