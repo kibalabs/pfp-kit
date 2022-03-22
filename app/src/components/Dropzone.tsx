@@ -22,11 +22,13 @@ const StyledDropzone = styled.div<IStyledDropzoneProps>`
   border-radius: ${(props: IStyledDropzoneProps): string => valueToCss(props.theme.dimensions.borderRadius)};
   border-color: #ccc;
   border-style: dashed;
-  background-color: #eee;
+  background-color: #ccc;
   justify-content: center;
   outline: none;
   cursor: pointer;
   transition: border .24s ease-in-out;
+  width: 9rem;
+  height: 9rem;
 `;
 
 export const Dropzone = (props: IDropzoneProps): React.ReactElement => {
@@ -41,7 +43,7 @@ export const Dropzone = (props: IDropzoneProps): React.ReactElement => {
   return (
     <StyledDropzone theme={theme} {...getRootProps()}>
       <input {...getInputProps()} />
-      <KibaIcon iconId='ion-plus' />
+      <KibaIcon iconId={'ion-plus-sign'} />
     </StyledDropzone>
   );
 };

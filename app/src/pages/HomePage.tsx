@@ -90,7 +90,7 @@ export const HomePage = (): React.ReactElement => {
                       {isUploadingImage ? (
                         <Text>Uploading image...</Text>
                       ) : (
-                        <Stack direction={Direction.Horizontal} isFullWidth={true} shouldAddGutters={true}>
+                        <Stack direction={Direction.Vertical} shouldAddGutters={true}>
                           <Dropzone onFilesChosen={onImageFilesChosen} />
                           <Text>Upload to IPFS</Text>
                           {shouldUseIpfs && (<Text variant='note'>IPFS storage works best with files below 3MB</Text>)}
