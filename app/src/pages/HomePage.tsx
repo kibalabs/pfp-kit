@@ -28,7 +28,7 @@ export const HomePage = (): React.ReactElement => {
     await onLinkAccountsClicked();
   };
 
-  const showImage = (tokenImageUrl) => {
+  const onImageClicked = (tokenImageUrl: string): void => {
     setStage(2);
     if (tokenImageUrl?.startsWith('ipfs://')) {
       const FormattedImageUrl = tokenImageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
@@ -75,7 +75,7 @@ export const HomePage = (): React.ReactElement => {
                 <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
                   {imageData && imageData.map((image, index: number) : React.ReactElement => (
                     <ImageView
-                      onClicked={showImage}
+                      onClicked={onImageClicked}
                       key={index}
                       name={image.name}
                       imageUrl={image.imageUrl}
