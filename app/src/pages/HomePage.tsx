@@ -3,17 +3,24 @@ import React from 'react';
 import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, LayerContainer, PaddingSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
+import { Dropzone } from '../components/Dropzone';
 import { ImageView } from '../components/ImageView';
-import { UpdateResult, UploadImage } from '../components/UploadFile';
 import { useGlobals } from '../globalsContext';
 import imageData from '../imageData.json';
+
+export type UpdateResult = {
+  isSuccess: boolean;
+  message: string;
+}
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
   const { web3StorageClient } = useGlobals();
-
+  const [isUploadingImage, setIsUploadingImage] = React.useState<boolean>(false);
+  const [updatingImageResult, setUpdatingImageResult] = React.useState<UpdateResult | null>(null);
+  const shouldUseIpfs = true;
   const [stage, setStage] = React.useState<number>(1);
-  const [imageLink, setImageLink] = React.useState<string>('');
+  const [imageUrl, setImageUrl] = React.useState<string>(null);
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
 
@@ -21,22 +28,22 @@ export const HomePage = (): React.ReactElement => {
     await onLinkAccountsClicked();
   };
 
-  const showImage = (imageUrl) => {
+  const showImage = (tokenImageUrl) => {
     setStage(2);
-    if (imageUrl?.startsWith('ipfs://')) {
-      const FormattedImageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
-      setImageLink(FormattedImageUrl);
+    if (tokenImageUrl?.startsWith('ipfs://')) {
+      const FormattedImageUrl = tokenImageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+      setImageUrl(FormattedImageUrl);
     }
   };
 
-  const onImageFilesChosen = async (shouldUseIpfs: boolean, files: File[]): Promise<UpdateResult> => {
+  const onImageFilesSelected = async (imageShouldUseIpfs: boolean, files: File[]): Promise<UpdateResult> => {
     // TODO(krishan711): ensure there is only one file
     const file = files[0];
-    if (shouldUseIpfs) {
+    if (imageShouldUseIpfs) {
       try {
         const cid = await web3StorageClient.put([file], { wrapWithDirectory: false });
         const url = `https://ipfs.io/ipfs/${cid}`;
-        setImageLink(url);
+        setImageUrl(url);
         setStage(2);
         return { isSuccess: true, message: `ipfs://${cid}` };
       } catch (error: unknown) {
@@ -45,6 +52,15 @@ export const HomePage = (): React.ReactElement => {
       }
     } return { isSuccess: false, message: 'Failed, kindly Upload to IPFS' };
   };
+
+  const onImageFilesChosen = async (files: File[]): Promise<void> => {
+    setUpdatingImageResult(null);
+    setIsUploadingImage(true);
+    const result = await onImageFilesSelected(shouldUseIpfs, files);
+    setUpdatingImageResult(result);
+    setIsUploadingImage(false);
+  };
+
   return (
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} padding={PaddingSize.Wide2} shouldAddGutters={true}>
@@ -66,12 +82,23 @@ export const HomePage = (): React.ReactElement => {
                     />
                   ))}
                   {onImageFilesChosen ? (
-                    <UploadImage
-                      onImageFilesChosen={onImageFilesChosen}
-                    />
+                    <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldWrapItems={true}>
+                      {isUploadingImage ? (
+                        <Text>Uploading image...</Text>
+                      ) : (
+                        <Stack direction={Direction.Horizontal} isFullWidth={true} shouldAddGutters={true}>
+                          <Dropzone onFilesChosen={onImageFilesChosen} />
+                          <Text>Upload to IPFS</Text>
+                          {shouldUseIpfs && (<Text variant='note'>IPFS storage works best with files below 3MB</Text>)}
+                        </Stack>
+                      )}
+                      {updatingImageResult && !updatingImageResult.isSuccess && (
+                        <Text variant='error'>{updatingImageResult.message}</Text>
+                      )}
+                    </Stack>
                   ) : (
                     <Box variant='tokenCard' shouldClipContent={true} width='160px' height='160px'>
-                      <Image source={imageLink} alternativeText='image' fitType='contain' />
+                      <Image source={imageUrl} alternativeText='image' fitType='contain' />
                     </Box>
                   )}
                 </Stack>
@@ -90,7 +117,7 @@ export const HomePage = (): React.ReactElement => {
                 </LayerContainer.Layer>
                 <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
                   <Box variant='rounded' shouldClipContent={true} width='130px' height='130px'>
-                    <Image source={imageLink} alternativeText='image' fitType='contain' />
+                    <Image source={imageUrl} alternativeText='image' fitType='contain' />
                   </Box>
                 </LayerContainer.Layer>
               </LayerContainer>
