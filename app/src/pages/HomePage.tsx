@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { truncateMiddle } from '@kibalabs/core';
-import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, LayerContainer, LinkBase, PaddingSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
+import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { Dropzone } from '../components/Dropzone';
@@ -64,10 +64,10 @@ export const HomePage = (): React.ReactElement => {
 
   return (
     <ContainingView>
-      <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} padding={PaddingSize.Wide2} shouldAddGutters={true}>
+      <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
         <Text variant='header1'>PFP KIT</Text>
         {account?.address && (
-          <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+          <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}padding={PaddingSize.Wide2}>
             <Text>Connected to</Text>
             <Box variant='rounded-borderColored' shouldClipContent={true} height='20px' width='20px'>
               <Image source={`https://web3-images-api.kibalabs.com/v1/accounts/${account?.address}/image`} alternativeText='Avatar' />
@@ -76,59 +76,119 @@ export const HomePage = (): React.ReactElement => {
           </Stack>
         )}
         {stage === 1 && (
-          <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Wide2}>
+          <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
             {!account?.address ? (
               <Button variant='large-primary' text= 'Connect Your Wallet' onClicked={onConnectWalletClicked} />
             ) : (
-              <Stack direction={Direction.Horizontal} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide3} padding={PaddingSize.Wide2}>
-                <Box variant='rounded-dottedBorder' shouldClipContent={true} width='20rem' height='20rem' />
-                <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-                    <Text> picture: </Text>
-                    <Button variant='tertiary' text={'choose now'} onClicked={() => setStage(3)} />
+              <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} paddingBottom={PaddingSize.Wide3}>
+                <ResponsiveHidingView hiddenBelow={ScreenSize.Medium}>
+                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide3} padding={PaddingSize.Wide2}>
+                    <Box variant='rounded-dottedBorder' shouldClipContent={true} width='20rem' height='20rem' />
+                    <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                      <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                        <Text> picture: </Text>
+                        <Button variant='tertiary' text={'choose now'} onClicked={() => setStage(3)} />
+                      </Stack>
+                      <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                        <Text> Frame: </Text>
+                        <Button variant='tertiary' text={'choose now'} />
+                      </Stack>
+                    </Stack>
                   </Stack>
-                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-                    <Text> Frame: </Text>
-                    <Button variant='tertiary' text={'choose now'} />
+                </ResponsiveHidingView>
+                <ResponsiveHidingView hiddenAbove={ScreenSize.Medium}>
+                  <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                    <Box variant='rounded-dottedBorder' shouldClipContent={true} width='20rem' height='20rem' />
+                    <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Wide2}>
+                      <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                        <Text> picture: </Text>
+                        <Button variant='tertiary' text={'choose now'} onClicked={() => setStage(3)} />
+                      </Stack>
+                      <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                        <Text> Frame: </Text>
+                        <Button variant='tertiary' text={'choose now'} />
+                      </Stack>
+                    </Stack>
                   </Stack>
-                </Stack>
+                </ResponsiveHidingView>
               </Stack>
             )}
           </Stack>
         )}
         {stage === 2 && (
-          <Stack direction={Direction.Horizontal} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide3} padding={PaddingSize.Wide3}>
-            <Box variant='rounded' shouldClipContent={true} width='20rem' height='20rem'>
-              <LayerContainer>
-                <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
-                  <Box variant='rounded-wideBorder' shouldClipContent={true} width='20rem' height='20rem'>
-                    <Image source='/assets/icon.png' alternativeText='image' fitType='contain' />
-                  </Box>
-                </LayerContainer.Layer>
-                <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
-                  <Box variant='rounded' shouldClipContent={true} width='17rem' height='17rem'>
-                    <Image source={imageUrl} alternativeText='image' fitType='contain' />
-                  </Box>
-                </LayerContainer.Layer>
-              </LayerContainer>
-            </Box>
-            <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Wide2}>
-              <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-                <Text> picture: </Text>
-                <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
-                  <Image source={imageUrl} alternativeText='image' fitType='contain' />
+          <Stack direction={Direction.Vertical} shouldWrapItems={true} isFullWidth={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center}>
+            <ResponsiveHidingView hiddenBelow={ScreenSize.Medium}>
+              <Stack direction={Direction.Horizontal} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide3} padding={PaddingSize.Wide3}>
+                <Box variant='rounded' shouldClipContent={true} width='20rem' height='20rem'>
+                  <LayerContainer>
+                    <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
+                      <Box variant='rounded-wideBorder' shouldClipContent={true} width='20rem' height='20rem'>
+                        <Image source='/assets/icon.png' alternativeText='image' fitType='contain' />
+                      </Box>
+                    </LayerContainer.Layer>
+                    <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
+                      <Box variant='rounded' shouldClipContent={true} width='17rem' height='17rem'>
+                        <Image source={imageUrl} alternativeText='image' fitType='contain' />
+                      </Box>
+                    </LayerContainer.Layer>
+                  </LayerContainer>
                 </Box>
-                <Button variant='secondary' text={'change'} onClicked={() => setStage(3)} />
+                <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Wide2}>
+                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                    <Text> picture: </Text>
+                    <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
+                      <Image source={imageUrl} alternativeText='image' fitType='contain' />
+                    </Box>
+                    <Button variant='secondary' text={'change'} onClicked={() => setStage(3)} />
+                  </Stack>
+                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                    <Text> Frame: </Text>
+                    <Button variant='secondary' text={'choose now'} />
+                  </Stack>
+                  <Button variant='secondary' isFullWidth={true} text= {'Set Twitter PFP'} iconGutter={PaddingSize.Wide} iconLeft={<KibaIcon iconId='ion-logo-twitter' />} />
+                  <Button variant='secondary' isFullWidth={true} text= {'Set Discord PFP'} iconLeft={<KibaIcon iconId='ion-logo-discord' />} />
+                  <Button variant='secondary' isFullWidth={true} text= {'Set ENS PFP'} iconLeft={<KibaIcon iconId='ion-globe' />} />
+                  <Button variant='secondary' isFullWidth={true} text= {'Download'} iconLeft={<KibaIcon iconId='ion-download' />} />
+                </Stack>
               </Stack>
-              <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-                <Text> Frame: </Text>
-                <Button variant='secondary' text={'choose now'} />
+            </ResponsiveHidingView>
+            <ResponsiveHidingView hiddenAbove={ScreenSize.Medium}>
+              <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Default}>
+                <Box variant='rounded' shouldClipContent={true} width='20rem' height='20rem'>
+                  <LayerContainer>
+                    <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
+                      <Box variant='rounded-wideBorder' shouldClipContent={true} width='20rem' height='20rem'>
+                        <Image source='/assets/icon.png' alternativeText='image' fitType='contain' />
+                      </Box>
+                    </LayerContainer.Layer>
+                    <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
+                      <Box variant='rounded' shouldClipContent={true} width='17rem' height='17rem'>
+                        <Image source={imageUrl} alternativeText='image' fitType='contain' />
+                      </Box>
+                    </LayerContainer.Layer>
+                  </LayerContainer>
+                </Box>
+                <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Wide2}>
+                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                    <Text> picture: </Text>
+                    <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
+                      <Image source={imageUrl} alternativeText='image' fitType='contain' />
+                    </Box>
+                    <Button variant='secondary' text={'change'} onClicked={() => setStage(3)} />
+                  </Stack>
+                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                    <Text> Frame: </Text>
+                    <Button variant='secondary' text={'choose now'} />
+                  </Stack>
+                  <Button variant='secondary' isFullWidth={true} text= {'Set Twitter PFP'} iconGutter={PaddingSize.Wide} iconLeft={<KibaIcon iconId='ion-logo-twitter' />} />
+                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                    <IconButton icon={<KibaIcon iconId='ion-logo-discord' />} />
+                    <IconButton icon={<KibaIcon iconId='ion-globe' />} />
+                    <IconButton icon={<KibaIcon iconId='ion-download' />} />
+                  </Stack>
+                </Stack>
               </Stack>
-              <Button variant='secondary' isFullWidth={true} text= {'Set Twitter PFP'} iconGutter={PaddingSize.Wide} iconLeft={<KibaIcon iconId='ion-logo-twitter' />} />
-              <Button variant='secondary' isFullWidth={true} text= {'Set Discord PFP'} iconLeft={<KibaIcon iconId='ion-logo-discord' />} />
-              <Button variant='secondary' isFullWidth={true} text= {'Set ENS PFP'} iconLeft={<KibaIcon iconId='ion-globe' />} />
-              <Button variant='secondary' isFullWidth={true} text= {'Download'} iconLeft={<KibaIcon iconId='ion-download' />} />
-            </Stack>
+            </ResponsiveHidingView>
           </Stack>
         )}
         {stage === 3 && (
