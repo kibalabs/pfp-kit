@@ -36,27 +36,25 @@ export const HomePage = (): React.ReactElement => {
     }
   };
 
-  const onImageFilesSelected = async (imageShouldUseIpfs: boolean, files: File[]): Promise<UpdateResult> => {
+  const onImageFilesSelected = async (files: File[]): Promise<UpdateResult> => {
     // TODO(krishan711): ensure there is only one file
     const file = files[0];
-    if (imageShouldUseIpfs) {
-      try {
-        const cid = await web3StorageClient.put([file], { wrapWithDirectory: false });
-        const url = `https://ipfs.io/ipfs/${cid}`;
-        setImageUrl(url);
-        setStage(2);
-        return { isSuccess: true, message: `ipfs://${cid}` };
-      } catch (error: unknown) {
-        console.error(error);
-        return { isSuccess: false, message: 'Failed to upload file to IPFS. Please try without IPFS whilst we look into what\'s happening.' };
-      }
-    } return { isSuccess: false, message: 'Failed, kindly Upload to IPFS' };
+    try {
+      const cid = await web3StorageClient.put([file], { wrapWithDirectory: false });
+      const url = `https://ipfs.io/ipfs/${cid}`;
+      setImageUrl(url);
+      setStage(2);
+      return { isSuccess: true, message: `ipfs://${cid}` };
+    } catch (error: unknown) {
+      console.error(error);
+      return { isSuccess: false, message: 'Failed, Please try again' };
+    }
   };
 
   const onImageFilesChosen = async (files: File[]): Promise<void> => {
     setUpdatingImageResult(null);
     setIsUploadingImage(true);
-    const result = await onImageFilesSelected(shouldUseIpfs, files);
+    const result = await onImageFilesSelected(files);
     setUpdatingImageResult(result);
     setIsUploadingImage(false);
   };
