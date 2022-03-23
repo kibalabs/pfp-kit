@@ -36,6 +36,12 @@ export const buildAppTheme = (): ITheme => {
         margin: '0',
         'box-shadow': '0px 0px 50px 20px rgba(255, 255, 255, 0.35) ',
       },
+      dottedBorder: {
+        margin: '0',
+        'border-style': 'dashed',
+        'border-width': '0.20em',
+        'border-color': '#FFFFFF',
+      },
     },
     buttons: {
       default: {
@@ -51,12 +57,14 @@ export const buildAppTheme = (): ITheme => {
         normal: {
           default: {
             background: {
-              'background-color': 'rgba(255, 255, 255, 0.25)',
-              'border-color': 'rgba(255, 255, 255, 0.3)',
+              'border-color': '#ffffff',
               'border-width': '1px',
+              'background-color': 'transparent',
+              'box-shadow': '0px 0px 5px 5px rgba(255, 255, 255, 0.35)',
             },
             text: {
-              color: '$colors.textOnBrand',
+              color: '#FFFFFF',
+              'text-shadow': '0px 0px 5px #FFFFFF ',
             },
           },
           hover: {
@@ -81,9 +89,8 @@ export const buildAppTheme = (): ITheme => {
           default: {
             background: {
               'border-color': '#ffffff',
-              'border-width': '1px',
+              'border-width': '0px',
               'background-color': 'transparent',
-              'box-shadow': '0px 0px 5px 5px rgba(255, 255, 255, 0.35) ',
             },
             text: {
               color: '#FFFFFF',
