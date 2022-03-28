@@ -3,11 +3,12 @@ import React from 'react';
 import { truncateMiddle } from '@kibalabs/core';
 import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
-import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
+import {  useOnLinkAccountsClicked } from '../AccountContext';
 import { Dropzone } from '../components/Dropzone';
 import { ImageView } from '../components/ImageView';
 import { useGlobals } from '../globalsContext';
 import imageData from '../imageData.json';
+import { Token } from '../client/resources';
 
 export type UpdateResult = {
   isSuccess: boolean;
@@ -15,13 +16,17 @@ export type UpdateResult = {
 }
 
 export const HomePage = (): React.ReactElement => {
-  const account = useAccount();
+  // const account = useAccount();
+  const accountAddress= '0x18090cDA49B21dEAffC21b4F886aed3eB787d032'
+  const { notdClient } = useGlobals();
   const { web3StorageClient } = useGlobals();
   const [isUploadingImage, setIsUploadingImage] = React.useState<boolean>(false);
   const [updatingImageResult, setUpdatingImageResult] = React.useState<UpdateResult | null>(null);
   const shouldUseIpfs = true;
   const [stage, setStage] = React.useState<number>(1);
   const [imageUrl, setImageUrl] = React.useState<string>(null);
+  const [ownersToken, setOwnersToken] = React.useState<Token[] | undefined | null>(undefined);
+
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
 
@@ -60,22 +65,36 @@ export const HomePage = (): React.ReactElement => {
     setIsUploadingImage(false);
   };
 
+  const getOwnerToken = React.useCallback(async (): Promise<void> => {
+    setOwnersToken(undefined);
+    notdClient.getOwnerToken(accountAddress).then((getOwnerToken: Token[]): void => {
+      setOwnersToken(getOwnerToken);
+    }).catch((error: unknown): void => {
+      console.error(error);
+      setOwnersToken(null);
+    });
+  }, [notdClient, accountAddress]);
+
+  React.useEffect((): void => {
+    getOwnerToken();
+    console.log('we')
+  }, [getOwnerToken]);
   return (
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
         <Text variant='header1'>PFP KIT</Text>
-        {account?.address && (
+        {accountAddress && (
           <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}padding={PaddingSize.Wide2}>
             <Text>Connected to</Text>
             <Box variant='rounded-borderColored' shouldClipContent={true} height='20px' width='20px'>
-              <Image source={`https://web3-images-api.kibalabs.com/v1/accounts/${account?.address}/image`} alternativeText='Avatar' />
+              <Image source={`https://web3-images-api.kibalabs.com/v1/accounts/${accountAddress}/image`} alternativeText='Avatar' />
             </Box>
-            <Text>{truncateMiddle(account?.address, 10)}</Text>
+            {/* <Text>{truncateMiddle(account?.address, 10)}</Text> */}
           </Stack>
         )}
         {stage === 1 && (
           <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-            {!account?.address ? (
+            {!accountAddress ? (
               <Button variant='large-primary' text= 'Connect Your Wallet' onClicked={onConnectWalletClicked} />
             ) : (
               <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} paddingBottom={PaddingSize.Wide3}>
@@ -193,7 +212,7 @@ export const HomePage = (): React.ReactElement => {
           <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide}isScrollableHorizontally={true} paddingBottom={PaddingSize.Wide3}>
             <Text variant='header3'>Choose your picture </Text>
             <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
-              {imageData && imageData.map((image, index: number) : React.ReactElement => (
+              {ownersToken && ownersToken.map((image, index: number) : React.ReactElement => (
                 <ImageView
                   onClicked={onImageClicked}
                   key={index}
