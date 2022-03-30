@@ -3,7 +3,7 @@ import React from 'react';
 import { truncateMiddle } from '@kibalabs/core';
 import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, LoadingSpinner, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
-import { useOnLinkAccountsClicked } from '../AccountContext';
+import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
 import { Dropzone } from '../components/Dropzone';
 import { TokenView } from '../components/TokenView';
@@ -15,9 +15,8 @@ export type UpdateResult = {
 }
 
 export const HomePage = (): React.ReactElement => {
-  // const account = useAccount();
   const { notdClient } = useGlobals();
-  const accountAddress = '0x18090cDA49B21dEAffC21b4F886aed3eB787d032';
+  const accountAddress = useAccount()?.address;
   const { web3StorageClient } = useGlobals();
   const [isUploadingImage, setIsUploadingImage] = React.useState<boolean>(false);
   const [updatingImageResult, setUpdatingImageResult] = React.useState<UpdateResult | null>(null);
