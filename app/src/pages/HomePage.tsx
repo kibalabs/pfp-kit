@@ -154,7 +154,6 @@ export const HomePage = (): React.ReactElement => {
                     <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
                       <Image source={imageUrl} alternativeText='image' fitType='contain' />
                     </Box>
-                    <Text>{}</Text>
                     <Button variant='secondary' text={'change'} onClicked={() => setStage(3)} />
                   </Stack>
                   <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
