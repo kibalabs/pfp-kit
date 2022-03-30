@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { truncateMiddle } from '@kibalabs/core';
-import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
+import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, LoadingSpinner, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
+import { CollectionToken } from '../client/resources';
 import { Dropzone } from '../components/Dropzone';
-import { ImageView } from '../components/ImageView';
+import { TokenView } from '../components/TokenView';
 import { useGlobals } from '../globalsContext';
-import imageData from '../imageData.json';
 
 export type UpdateResult = {
   isSuccess: boolean;
@@ -16,12 +16,14 @@ export type UpdateResult = {
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
+  const { notdClient } = useGlobals();
   const { web3StorageClient } = useGlobals();
   const [isUploadingImage, setIsUploadingImage] = React.useState<boolean>(false);
   const [updatingImageResult, setUpdatingImageResult] = React.useState<UpdateResult | null>(null);
   const shouldUseIpfs = true;
   const [stage, setStage] = React.useState<number>(1);
   const [imageUrl, setImageUrl] = React.useState<string>(null);
+  const [ownerTokens, setOwnerTokens] = React.useState<CollectionToken[] | undefined | null>(undefined);
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
 
@@ -29,10 +31,10 @@ export const HomePage = (): React.ReactElement => {
     await onLinkAccountsClicked();
   };
 
-  const onImageClicked = (tokenImageUrl: string): void => {
+  const onImageClicked = (token : CollectionToken): void => {
     setStage(2);
-    if (tokenImageUrl?.startsWith('ipfs://')) {
-      const FormattedImageUrl = tokenImageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+    if (token.imageUrl?.startsWith('ipfs://')) {
+      const FormattedImageUrl = token.imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
       setImageUrl(FormattedImageUrl);
     }
   };
@@ -59,6 +61,20 @@ export const HomePage = (): React.ReactElement => {
     setUpdatingImageResult(result);
     setIsUploadingImage(false);
   };
+
+  const getOwnerTokens = React.useCallback(async (): Promise<void> => {
+    setOwnerTokens(undefined);
+    notdClient.getOwnerTokens(account?.address).then((tokens: CollectionToken[]): void => {
+      setOwnerTokens(tokens);
+    }).catch((error: unknown): void => {
+      console.error(error);
+      setOwnerTokens(null);
+    });
+  }, [notdClient, account?.address]);
+
+  React.useEffect((): void => {
+    getOwnerTokens();
+  }, [getOwnerTokens]);
 
   return (
     <ContainingView>
@@ -193,14 +209,19 @@ export const HomePage = (): React.ReactElement => {
           <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide}isScrollableHorizontally={true} paddingBottom={PaddingSize.Wide3}>
             <Text variant='header3'>Choose your picture </Text>
             <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
-              {imageData && imageData.map((image, index: number) : React.ReactElement => (
-                <ImageView
-                  onClicked={onImageClicked}
-                  key={index}
-                  name={image.name}
-                  imageUrl={image.imageUrl}
-                />
-              ))}
+              {ownerTokens === undefined ? (
+                <LoadingSpinner />
+              ) : ownerTokens === null ? (
+                <Text variant='error'>Tokens failed to load</Text>
+              ) : (
+                ownerTokens.map((ownerToken: CollectionToken, index: number) : React.ReactElement => (
+                  <TokenView
+                    onClicked={onImageClicked}
+                    key={index}
+                    token={ownerToken}
+                  />
+                ))
+              )}
               {imageUrl ? (
                 <Box variant='tokenCard' shouldClipContent={true} width='160px' height='160px'>
                   <Image source={imageUrl} alternativeText='image' fitType='contain' />
