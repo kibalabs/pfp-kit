@@ -5,7 +5,7 @@ import { Alignment, Box, Direction, Image, LinkBase, PaddingSize, Stack, Text, T
 
 import { CollectionToken } from '../client/resources';
 
-export interface ImageViewProps {
+export interface TokenViewProps {
   token: CollectionToken;
   onClicked?: (token: CollectionToken) => void;
   imageUrl?: string;
@@ -13,7 +13,7 @@ export interface ImageViewProps {
 
 const defaultImage = '/assets/icon.png';
 
-export const TokenView = (props:ImageViewProps): React.ReactElement => {
+export const TokenView = (props:TokenViewProps): React.ReactElement => {
   const onClicked = (): void => {
     if (props.onClicked) {
       props.onClicked(props.token);
