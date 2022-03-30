@@ -14,7 +14,7 @@ export class TokenAttribute {
     );
   };
 }
-export class Token {
+export class CollectionToken {
   readonly registryAddress: string;
   readonly tokenId: string;
   readonly name: string;
@@ -31,8 +31,8 @@ export class Token {
     this.attributes = attributes;
   }
 
-  public static fromObject = (obj: Record<string, unknown>): Token => {
-    return new Token(
+  public static fromObject = (obj: Record<string, unknown>): CollectionToken => {
+    return new CollectionToken(
       String(obj.registryAddress),
       String(obj.tokenId),
       String(obj.name),

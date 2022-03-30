@@ -8,7 +8,7 @@ export class NotdClient extends ServiceClient {
     super(requester, baseUrl || 'https://notd-api.kibalabs.com');
   }
 
-  public getOwnerTokens = async (accountAddress: string): Promise<Resources.Token[]> => {
+  public getOwnerTokens = async (accountAddress: string): Promise<Resources.CollectionToken[]> => {
     const method = RestMethod.GET;
     const path = `v1/accounts/${accountAddress}/tokens`;
     const request = new Endpoints.GetOwnerTokensRequest();

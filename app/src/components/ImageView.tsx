@@ -3,11 +3,11 @@ import React from 'react';
 import { truncateStart } from '@kibalabs/core';
 import { Alignment, Box, Direction, Image, LinkBase, PaddingSize, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
 
-import { Token } from '../client/resources';
+import { CollectionToken } from '../client/resources';
 
 export interface ImageViewProps {
-  token: Token;
-  onClicked?: (token: Token) => void;
+  token: CollectionToken;
+  onClicked?: (token: CollectionToken) => void;
   imageUrl?: string;
 }
 

@@ -4,7 +4,7 @@ import { truncateMiddle } from '@kibalabs/core';
 import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useOnLinkAccountsClicked } from '../AccountContext';
-import { Token } from '../client/resources';
+import { CollectionToken } from '../client/resources';
 import { Dropzone } from '../components/Dropzone';
 import { ImageView } from '../components/ImageView';
 import { useGlobals } from '../globalsContext';
@@ -24,7 +24,7 @@ export const HomePage = (): React.ReactElement => {
   const shouldUseIpfs = true;
   const [stage, setStage] = React.useState<number>(1);
   const [imageUrl, setImageUrl] = React.useState<string>(null);
-  const [ownerTokens, setOwnerTokens] = React.useState<Token[] | undefined | null>(undefined);
+  const [ownerTokens, setOwnerTokens] = React.useState<CollectionToken[] | undefined | null>(undefined);
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
 
@@ -32,7 +32,7 @@ export const HomePage = (): React.ReactElement => {
     await onLinkAccountsClicked();
   };
 
-  const onImageClicked = (token : Token): void => {
+  const onImageClicked = (token : CollectionToken): void => {
     setStage(2);
     if (token.imageUrl?.startsWith('ipfs://')) {
       const FormattedImageUrl = token.imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
@@ -65,7 +65,7 @@ export const HomePage = (): React.ReactElement => {
 
   const getOwnerTokens = React.useCallback(async (): Promise<void> => {
     setOwnerTokens(undefined);
-    notdClient.getOwnerTokens(accountAddress).then((tokens: Token[]): void => {
+    notdClient.getOwnerTokens(accountAddress).then((tokens: CollectionToken[]): void => {
       setOwnerTokens(tokens);
     }).catch((error: unknown): void => {
       console.error(error);
@@ -211,7 +211,7 @@ export const HomePage = (): React.ReactElement => {
           <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide}isScrollableHorizontally={true} paddingBottom={PaddingSize.Wide3}>
             <Text variant='header3'>Choose your picture </Text>
             <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
-              {ownerTokens && ownerTokens.map((ownerToken: Token, index: number) : React.ReactElement => (
+              {ownerTokens && ownerTokens.map((ownerToken: CollectionToken, index: number) : React.ReactElement => (
 
 
                 <ImageView
