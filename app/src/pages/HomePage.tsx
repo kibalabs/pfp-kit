@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { truncateMiddle } from '@kibalabs/core';
-import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
+import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, LoadingSpinner, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
@@ -211,13 +211,19 @@ export const HomePage = (): React.ReactElement => {
           <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide}isScrollableHorizontally={true} paddingBottom={PaddingSize.Wide3}>
             <Text variant='header3'>Choose your picture </Text>
             <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
-              {ownerTokens && ownerTokens.map((ownerToken: CollectionToken, index: number) : React.ReactElement => (
-                <TokenView
-                  onClicked={onImageClicked}
-                  key={index}
-                  token={ownerToken}
-                />
-              ))}
+              {ownerTokens === undefined ? (
+                <LoadingSpinner />
+              ) : ownerTokens === null ? (
+                <Text variant='error'>Tokens failed to load</Text>
+              ) : (
+                ownerTokens.map((ownerToken: CollectionToken, index: number) : React.ReactElement => (
+                  <TokenView
+                    onClicked={onImageClicked}
+                    key={index}
+                    token={ownerToken}
+                  />
+                ))
+              )}
               {imageUrl ? (
                 <Box variant='tokenCard' shouldClipContent={true} width='160px' height='160px'>
                   <Image source={imageUrl} alternativeText='image' fitType='contain' />
