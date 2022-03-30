@@ -15,8 +15,8 @@ export type UpdateResult = {
 }
 
 export const HomePage = (): React.ReactElement => {
+  const account = useAccount();
   const { notdClient } = useGlobals();
-  const accountAddress = useAccount()?.address;
   const { web3StorageClient } = useGlobals();
   const [isUploadingImage, setIsUploadingImage] = React.useState<boolean>(false);
   const [updatingImageResult, setUpdatingImageResult] = React.useState<UpdateResult | null>(null);
@@ -64,13 +64,13 @@ export const HomePage = (): React.ReactElement => {
 
   const getOwnerTokens = React.useCallback(async (): Promise<void> => {
     setOwnerTokens(undefined);
-    notdClient.getOwnerTokens(accountAddress).then((tokens: CollectionToken[]): void => {
+    notdClient.getOwnerTokens(account?.address).then((tokens: CollectionToken[]): void => {
       setOwnerTokens(tokens);
     }).catch((error: unknown): void => {
       console.error(error);
       setOwnerTokens(null);
     });
-  }, [notdClient, accountAddress]);
+  }, [notdClient, account?.address]);
 
   React.useEffect((): void => {
     getOwnerTokens();
@@ -80,18 +80,18 @@ export const HomePage = (): React.ReactElement => {
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
         <Text variant='header1'>PFP KIT</Text>
-        {accountAddress && (
+        {account?.address && (
           <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}padding={PaddingSize.Wide2}>
             <Text>Connected to</Text>
             <Box variant='rounded-borderColored' shouldClipContent={true} height='20px' width='20px'>
-              <Image source={`https://web3-images-api.kibalabs.com/v1/accounts/${accountAddress}/image`} alternativeText='Avatar' />
+              <Image source={`https://web3-images-api.kibalabs.com/v1/accounts/${account?.address}/image`} alternativeText='Avatar' />
             </Box>
-            <Text>{truncateMiddle(accountAddress, 10)}</Text>
+            <Text>{truncateMiddle(account?.address, 10)}</Text>
           </Stack>
         )}
         {stage === 1 && (
           <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-            {!accountAddress ? (
+            {!account?.address ? (
               <Button variant='large-primary' text= 'Connect Your Wallet' onClicked={onConnectWalletClicked} />
             ) : (
               <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} paddingBottom={PaddingSize.Wide3}>
