@@ -8,7 +8,6 @@ import { NotdClient } from './client/client';
 export interface IGlobals {
   web3StorageClient: Web3Storage;
   notdClient: NotdClient;
-
 }
 
 export const GlobalsContext = React.createContext<IGlobals | null>(null);

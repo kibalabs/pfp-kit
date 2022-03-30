@@ -212,8 +212,6 @@ export const HomePage = (): React.ReactElement => {
             <Text variant='header3'>Choose your picture </Text>
             <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
               {ownerTokens && ownerTokens.map((ownerToken: CollectionToken, index: number) : React.ReactElement => (
-
-
                 <ImageView
                   onClicked={onImageClicked}
                   key={index}

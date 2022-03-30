@@ -2,7 +2,6 @@ import { RequestData, ResponseData } from '@kibalabs/core';
 
 import * as Resources from './resources';
 
-
 export class GetOwnerTokensRequest extends RequestData {
 }
 
