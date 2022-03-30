@@ -3,12 +3,11 @@ import React from 'react';
 import { truncateMiddle } from '@kibalabs/core';
 import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
-import {  useOnLinkAccountsClicked } from '../AccountContext';
+import { useOnLinkAccountsClicked } from '../AccountContext';
+import { Token } from '../client/resources';
 import { Dropzone } from '../components/Dropzone';
 import { ImageView } from '../components/ImageView';
 import { useGlobals } from '../globalsContext';
-import imageData from '../imageData.json';
-import { Token } from '../client/resources';
 
 export type UpdateResult = {
   isSuccess: boolean;
@@ -17,16 +16,15 @@ export type UpdateResult = {
 
 export const HomePage = (): React.ReactElement => {
   // const account = useAccount();
-  const accountAddress= '0x18090cDA49B21dEAffC21b4F886aed3eB787d032'
   const { notdClient } = useGlobals();
+  const accountAddress = '0x18090cDA49B21dEAffC21b4F886aed3eB787d032';
   const { web3StorageClient } = useGlobals();
   const [isUploadingImage, setIsUploadingImage] = React.useState<boolean>(false);
   const [updatingImageResult, setUpdatingImageResult] = React.useState<UpdateResult | null>(null);
   const shouldUseIpfs = true;
   const [stage, setStage] = React.useState<number>(1);
   const [imageUrl, setImageUrl] = React.useState<string>(null);
-  const [ownersToken, setOwnersToken] = React.useState<Token[] | undefined | null>(undefined);
-
+  const [ownerTokens, setOwnerTokens] = React.useState<Token[] | undefined | null>(undefined);
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
 
@@ -34,10 +32,10 @@ export const HomePage = (): React.ReactElement => {
     await onLinkAccountsClicked();
   };
 
-  const onImageClicked = (tokenImageUrl: string): void => {
+  const onImageClicked = (token : Token): void => {
     setStage(2);
-    if (tokenImageUrl?.startsWith('ipfs://')) {
-      const FormattedImageUrl = tokenImageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+    if (token.imageUrl?.startsWith('ipfs://')) {
+      const FormattedImageUrl = token.imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
       setImageUrl(FormattedImageUrl);
     }
   };
@@ -65,20 +63,20 @@ export const HomePage = (): React.ReactElement => {
     setIsUploadingImage(false);
   };
 
-  const getOwnerToken = React.useCallback(async (): Promise<void> => {
-    setOwnersToken(undefined);
-    notdClient.getOwnerToken(accountAddress).then((getOwnerToken: Token[]): void => {
-      setOwnersToken(getOwnerToken);
+  const getOwnerTokens = React.useCallback(async (): Promise<void> => {
+    setOwnerTokens(undefined);
+    notdClient.getOwnerTokens(accountAddress).then((tokens: Token[]): void => {
+      setOwnerTokens(tokens);
     }).catch((error: unknown): void => {
       console.error(error);
-      setOwnersToken(null);
+      setOwnerTokens(null);
     });
   }, [notdClient, accountAddress]);
 
   React.useEffect((): void => {
-    getOwnerToken();
-    console.log('we')
-  }, [getOwnerToken]);
+    getOwnerTokens();
+  }, [getOwnerTokens]);
+
   return (
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
@@ -89,7 +87,7 @@ export const HomePage = (): React.ReactElement => {
             <Box variant='rounded-borderColored' shouldClipContent={true} height='20px' width='20px'>
               <Image source={`https://web3-images-api.kibalabs.com/v1/accounts/${accountAddress}/image`} alternativeText='Avatar' />
             </Box>
-            {/* <Text>{truncateMiddle(account?.address, 10)}</Text> */}
+            <Text>{truncateMiddle(accountAddress, 10)}</Text>
           </Stack>
         )}
         {stage === 1 && (
@@ -156,6 +154,7 @@ export const HomePage = (): React.ReactElement => {
                     <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
                       <Image source={imageUrl} alternativeText='image' fitType='contain' />
                     </Box>
+                    <Text>{}</Text>
                     <Button variant='secondary' text={'change'} onClicked={() => setStage(3)} />
                   </Stack>
                   <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
@@ -212,12 +211,13 @@ export const HomePage = (): React.ReactElement => {
           <Stack direction={Direction.Vertical} childAlignment={Alignment.Start} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide}isScrollableHorizontally={true} paddingBottom={PaddingSize.Wide3}>
             <Text variant='header3'>Choose your picture </Text>
             <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
-              {ownersToken && ownersToken.map((image, index: number) : React.ReactElement => (
+              {ownerTokens && ownerTokens.map((ownerToken: Token, index: number) : React.ReactElement => (
+
+
                 <ImageView
                   onClicked={onImageClicked}
                   key={index}
-                  name={image.name}
-                  imageUrl={image.imageUrl}
+                  token={ownerToken}
                 />
               ))}
               {imageUrl ? (

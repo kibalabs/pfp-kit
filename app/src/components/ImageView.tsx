@@ -3,24 +3,26 @@ import React from 'react';
 import { truncateStart } from '@kibalabs/core';
 import { Alignment, Box, Direction, Image, LinkBase, PaddingSize, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
 
-export interface TokenCardProps {
-  name?: string
-  onClicked?: (imageUrl: string) => void;
+import { Token } from '../client/resources';
+
+export interface ImageViewProps {
+  token: Token;
+  onClicked?: (token: Token) => void;
   imageUrl?: string;
 }
 
 const defaultImage = '/assets/icon.png';
 
-export const ImageView = (props:TokenCardProps): React.ReactElement => {
+export const ImageView = (props:ImageViewProps): React.ReactElement => {
   const onClicked = (): void => {
     if (props.onClicked) {
-      props.onClicked(props.imageUrl);
+      props.onClicked(props.token);
     }
   };
 
-  let imageUrl = '';
-  if (props.imageUrl?.startsWith('ipfs://')) {
-    imageUrl = props.imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+  let imageUrl = props.token?.imageUrl || defaultImage;
+  if (imageUrl?.startsWith('ipfs://')) {
+    imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
   }
 
   return (
@@ -32,7 +34,7 @@ export const ImageView = (props:TokenCardProps): React.ReactElement => {
           </Box>
           <Box>
             <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} padding={PaddingSize.Wide}>
-              <Text variant='bold' alignment={TextAlignment.Center}>{truncateStart(props.name, 15)}</Text>
+              <Text variant='bold' alignment={TextAlignment.Center}>{truncateStart(props.token.name, 15)}</Text>
             </Stack>
           </Box>
         </Box>

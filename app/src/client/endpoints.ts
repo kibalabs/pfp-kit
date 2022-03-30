@@ -1,36 +1,22 @@
-import * as Resources from './resources';
 import { RequestData, ResponseData } from '@kibalabs/core';
 
+import * as Resources from './resources';
 
-export class GetOwnersTokensRequest extends RequestData {
+
+export class GetOwnerTokensRequest extends RequestData {
 }
 
-export class GetOwnersTokensResponse extends ResponseData {
-  readonly token: Resources.Token[];
+export class GetOwnerTokensResponse extends ResponseData {
+  readonly tokens: Resources.Token[];
 
   public constructor(token: Resources.Token[]) {
     super();
-    this.token = token;
+    this.tokens = token;
   }
 
-  public static fromObject = (obj: Record<string, unknown>): GetOwnersTokensResponse => {
-    return new GetOwnersTokensResponse(
+  public static fromObject = (obj: Record<string, unknown>): GetOwnerTokensResponse => {
+    return new GetOwnerTokensResponse(
       (obj.tokens as Record<string, unknown>[]).map((innerObj: Record<string, unknown>) => Resources.Token.fromObject(innerObj)),
     );
   };
 }
-
-// export class GetOwnersTokensResponse extends ResponseData {
-//   readonly token: Resources.Token;
-
-//   public constructor(token: Resources.Token) {
-//     super();
-//     this.token = token;
-//   }
-
-//   public static fromObject = (obj: Record<string, unknown>): GetOwnersTokensResponse => {
-//     return new GetOwnersTokensResponse(
-//       Resources.Token.fromObject(obj.token as Record<string, unknown>),
-//     );
-//   };
-// }
