@@ -6,7 +6,7 @@ import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, K
 import { useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
 import { Dropzone } from '../components/Dropzone';
-import { ImageView } from '../components/ImageView';
+import { TokenView } from '../components/TokenView';
 import { useGlobals } from '../globalsContext';
 
 export type UpdateResult = {
@@ -212,7 +212,7 @@ export const HomePage = (): React.ReactElement => {
             <Text variant='header3'>Choose your picture </Text>
             <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} shouldWrapItems={true}>
               {ownerTokens && ownerTokens.map((ownerToken: CollectionToken, index: number) : React.ReactElement => (
-                <ImageView
+                <TokenView
                   onClicked={onImageClicked}
                   key={index}
                   token={ownerToken}

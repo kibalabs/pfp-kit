@@ -13,7 +13,7 @@ export interface ImageViewProps {
 
 const defaultImage = '/assets/icon.png';
 
-export const ImageView = (props:ImageViewProps): React.ReactElement => {
+export const TokenView = (props:ImageViewProps): React.ReactElement => {
   const onClicked = (): void => {
     if (props.onClicked) {
       props.onClicked(props.token);
