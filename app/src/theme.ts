@@ -21,6 +21,10 @@ export const buildAppTheme = (): ITheme => {
       note: {
         color: '$colors.textClear50',
       },
+      header1: {
+        'font-size': '5.0rem',
+        'font-weight': '900',
+      },
       header3: {
         'font-size': '2.0rem',
         'font-weight': '500',
@@ -95,6 +99,38 @@ export const buildAppTheme = (): ITheme => {
             text: {
               color: '#FFFFFF',
               'text-shadow': '0px 0px 5px #FFFFFF ',
+              'font-size': '15px',
+            },
+          },
+          hover: {
+            background: {
+              'background-color': 'rgba(255, 255, 255, 0.35)',
+            },
+          },
+          press: {
+            background: {
+              'background-color': 'rgba(255, 255, 255, 0.55)',
+            },
+          },
+          focus: {
+            background: {
+              'border-color': 'rgba(255, 255, 255, 0.75)',
+            },
+          },
+        },
+      },
+      tertiary: {
+        normal: {
+          default: {
+            background: {
+              'border-color': '#ffffff',
+              'border-width': '0px',
+              'background-color': 'transparent',
+            },
+            text: {
+              color: 'rgb(179, 199, 248)',
+              'text-shadow': '0px 0px 5px rgb(179, 199, 248) ',
+              'font-size': '1.0rem',
             },
           },
           hover: {

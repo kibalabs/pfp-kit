@@ -39,6 +39,10 @@ export const HomePage = (): React.ReactElement => {
     }
   };
 
+  const onChangeImageClicked = (): void => {
+    setStage(3);
+    setImageUrl(null);
+  };
   const onImageFilesSelected = async (files: File[]): Promise<UpdateResult> => {
     // TODO(krishan711): ensure there is only one file
     const file = files[0];
@@ -62,6 +66,22 @@ export const HomePage = (): React.ReactElement => {
     setIsUploadingImage(false);
   };
 
+  const downloadImage = async () => {
+    const image = await fetch(imageUrl);
+
+    // Split image name
+    const nameSplit = imageUrl.split('/');
+    const duplicateName = nameSplit.pop();
+    const imageBlog = await image.blob();
+    const imageURL = URL.createObjectURL(imageBlog);
+    const link = document.createElement('a');
+    link.href = imageURL;
+    link.download = `${duplicateName}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const getOwnerTokens = React.useCallback(async (): Promise<void> => {
     setOwnerTokens(undefined);
     notdClient.getOwnerTokens(account?.address).then((tokens: CollectionToken[]): void => {
@@ -75,10 +95,9 @@ export const HomePage = (): React.ReactElement => {
   React.useEffect((): void => {
     getOwnerTokens();
   }, [getOwnerTokens]);
-
   return (
     <ContainingView>
-      <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+      <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Wide2}>
         <Text variant='header1'>PFP KIT</Text>
         {account?.address && (
           <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}padding={PaddingSize.Wide2}>
@@ -136,9 +155,9 @@ export const HomePage = (): React.ReactElement => {
                 <Box variant='rounded' shouldClipContent={true} width='20rem' height='20rem'>
                   <LayerContainer>
                     <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
-                      <Box variant='rounded-wideBorder' shouldClipContent={true} width='20rem' height='20rem'>
+                      {/* <Box variant='rounded-wideBorder' shouldClipContent={true} width='20rem' height='20rem'>
                         <Image source='/assets/icon.png' alternativeText='image' fitType='contain' />
-                      </Box>
+                      </Box> */}
                     </LayerContainer.Layer>
                     <LayerContainer.Layer isFullHeight={false} isFullWidth={false} alignmentVertical={Alignment.Center} alignmentHorizontal={Alignment.Center}>
                       <Box variant='rounded' shouldClipContent={true} width='17rem' height='17rem'>
@@ -153,16 +172,16 @@ export const HomePage = (): React.ReactElement => {
                     <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
                       <Image source={imageUrl} alternativeText='image' fitType='contain' />
                     </Box>
-                    <Button variant='secondary' text={'change'} onClicked={() => setStage(3)} />
+                    <Button variant='tertiary' text={'change'} onClicked={onChangeImageClicked} />
                   </Stack>
                   <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
                     <Text> Frame: </Text>
-                    <Button variant='secondary' text={'choose now'} />
+                    <Button variant='tertiary' text={'choose now'} />
                   </Stack>
                   <Button variant='secondary' isFullWidth={true} text= {'Set Twitter PFP'} iconGutter={PaddingSize.Wide} iconLeft={<KibaIcon iconId='ion-logo-twitter' />} />
                   <Button variant='secondary' isFullWidth={true} text= {'Set Discord PFP'} iconLeft={<KibaIcon iconId='ion-logo-discord' />} />
                   <Button variant='secondary' isFullWidth={true} text= {'Set ENS PFP'} iconLeft={<KibaIcon iconId='ion-globe' />} />
-                  <Button variant='secondary' isFullWidth={true} text= {'Download'} iconLeft={<KibaIcon iconId='ion-download' />} />
+                  <Button variant='secondary' isFullWidth={true} text= {'Download'} onClicked={downloadImage} iconLeft={<KibaIcon iconId='ion-download' />} />
                 </Stack>
               </Stack>
             </ResponsiveHidingView>
@@ -188,7 +207,7 @@ export const HomePage = (): React.ReactElement => {
                     <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
                       <Image source={imageUrl} alternativeText='image' fitType='contain' />
                     </Box>
-                    <Button variant='secondary' text={'change'} onClicked={() => setStage(3)} />
+                    <Button variant='secondary' text={'change'} onClicked={onChangeImageClicked} />
                   </Stack>
                   <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
                     <Text> Frame: </Text>
@@ -198,7 +217,7 @@ export const HomePage = (): React.ReactElement => {
                   <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
                     <IconButton icon={<KibaIcon iconId='ion-logo-discord' />} />
                     <IconButton icon={<KibaIcon iconId='ion-globe' />} />
-                    <IconButton icon={<KibaIcon iconId='ion-download' />} />
+                    <IconButton icon={<KibaIcon iconId='ion-download' />} onClicked={downloadImage} />
                   </Stack>
                 </Stack>
               </Stack>
