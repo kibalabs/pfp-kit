@@ -97,10 +97,10 @@ export const HomePage = (): React.ReactElement => {
   }, [getOwnerTokens]);
   return (
     <ContainingView>
-      <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Wide2}>
+      <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
         <Text variant='header1'>PFP KIT</Text>
         {account?.address && (
-          <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}padding={PaddingSize.Wide2}>
+          <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
             <Text>Connected to</Text>
             <Box variant='rounded-borderColored' shouldClipContent={true} height='20px' width='20px'>
               <Image source={`https://web3-images-api.kibalabs.com/v1/accounts/${account?.address}/image`} alternativeText='Avatar' />
