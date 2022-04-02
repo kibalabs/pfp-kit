@@ -5,7 +5,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
 
-type Account = {
+export type Account = {
   address: string;
   signer: ethers.Signer;
 }

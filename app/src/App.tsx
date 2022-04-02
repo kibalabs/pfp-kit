@@ -24,7 +24,7 @@ const web3StorageClient = new Web3Storage({ token: typeof window !== 'undefined'
 const notdClient = new NotdClient(requester, typeof window !== 'undefined' ? window.KRT_API_URL : undefined);
 
 const theme = buildAppTheme();
-const tracker = new EveryviewTracker('da82fef72d614762b253d0bfe0503226', true);
+const tracker = new EveryviewTracker('26c8cdc5634542969311db49441ce95b', true);
 
 const globals: IGlobals = {
   web3StorageClient,

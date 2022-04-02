@@ -10,12 +10,12 @@ export const buildAppTheme = (): ITheme => {
     },
     fonts: {
       main: {
-        url: 'https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap',
+        url: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap',
       },
     },
     texts: {
       default: {
-        'font-family': "'Roboto Condensed', sans-serif",
+        'font-family': "'Montserrat', sans-serif",
         'font-weight': '400',
       },
       note: {
@@ -44,15 +44,6 @@ export const buildAppTheme = (): ITheme => {
       },
     },
     buttons: {
-      default: {
-        normal: {
-          default: {
-            text: {
-              'font-size': '0.8em',
-            },
-          },
-        },
-      },
       primary: {
         normal: {
           default: {
@@ -60,11 +51,11 @@ export const buildAppTheme = (): ITheme => {
               'border-color': '#ffffff',
               'border-width': '1px',
               'background-color': 'transparent',
-              'box-shadow': '0px 0px 5px 5px rgba(255, 255, 255, 0.35)',
+              'box-shadow': '0px 0px 4px 4px rgba(255, 255, 255, 0.2)',
             },
             text: {
               color: '#FFFFFF',
-              'text-shadow': '0px 0px 5px #FFFFFF ',
+              'text-shadow': '0px 0px 0.75em rgba(255, 255, 255, 0.75)',
             },
           },
           hover: {
@@ -94,7 +85,7 @@ export const buildAppTheme = (): ITheme => {
             },
             text: {
               color: '#FFFFFF',
-              'text-shadow': '0px 0px 5px #FFFFFF ',
+              'text-shadow': '0px 0px 1em rgba(255, 255, 255, 0.9)',
             },
           },
           hover: {
@@ -114,8 +105,19 @@ export const buildAppTheme = (): ITheme => {
           },
         },
       },
+      large: {
+        normal: {
+          default: {
+            background: {
+              "border-radius": '1em',
+            },
+            text: {
+              "font-size": '1.2em',
+            }
+          },
+        },
+      },
     },
-
     selectableViews: {
       default: {
         normal: {
@@ -134,7 +136,6 @@ export const buildAppTheme = (): ITheme => {
             overlay: baseTheme.linkBases.default.normal.focus.background,
           },
         },
-
         selected: {
           default: {
             overlay: {

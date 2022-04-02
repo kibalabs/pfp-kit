@@ -13,6 +13,7 @@ export interface IGlobals {
 export const GlobalsContext = React.createContext<IGlobals | null>(null);
 
 interface IGlobalsProviderProps extends IMultiAnyChildProps {
+  globals: IGlobals;
 }
 
 export const GlobalsProvider = (props: IGlobalsProviderProps): React.ReactElement => (

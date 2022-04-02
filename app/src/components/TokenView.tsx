@@ -28,7 +28,7 @@ export const TokenView = (props:TokenViewProps): React.ReactElement => {
   return (
     <LinkBase onClicked={onClicked}>
       <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldWrapItems={true}>
-        <Box variant='tokenCard' shouldClipContent={true}>
+        <Box shouldClipContent={true}>
           <Box height='9rem' width='9rem'>
             <Image source={ imageUrl || defaultImage} alternativeText='image' fitType='contain' />
           </Box>
