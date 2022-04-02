@@ -1,10 +1,12 @@
 import { buildTheme, ITheme } from '@kibalabs/ui-react';
+import { transparentize } from 'polished';
 
 export const buildAppTheme = (): ITheme => {
   const baseTheme = buildTheme();
+  const brandPrimary = '#B3C7F8';
   const theme = buildTheme({
     colors: {
-      brandPrimary: '#ffffff',
+      brandPrimary: brandPrimary,
       background: '#000000',
       text: '#ffffff',
     },
@@ -51,56 +53,11 @@ export const buildAppTheme = (): ITheme => {
               'border-color': '#ffffff',
               'border-width': '1px',
               'background-color': 'transparent',
-              'box-shadow': '0px 0px 4px 4px rgba(255, 255, 255, 0.2)',
+              'box-shadow': `0px 0px 4px 4px ${transparentize(brandPrimary, 0.2)}`,
             },
             text: {
-              color: '#FFFFFF',
-              'text-shadow': '0px 0px 0.75em rgba(255, 255, 255, 0.75)',
-            },
-          },
-          hover: {
-            background: {
-              'background-color': 'rgba(255, 255, 255, 0.35)',
-            },
-          },
-          press: {
-            background: {
-              'background-color': 'rgba(255, 255, 255, 0.55)',
-            },
-          },
-          focus: {
-            background: {
-              'border-color': 'rgba(255, 255, 255, 0.75)',
-            },
-          },
-        },
-      },
-      secondary: {
-        normal: {
-          default: {
-            background: {
-              'border-color': '#ffffff',
-              'border-width': '0px',
-              'background-color': 'transparent',
-            },
-            text: {
-              color: '#FFFFFF',
-              'text-shadow': '0px 0px 1em rgba(255, 255, 255, 0.9)',
-            },
-          },
-          hover: {
-            background: {
-              'background-color': 'rgba(255, 255, 255, 0.35)',
-            },
-          },
-          press: {
-            background: {
-              'background-color': 'rgba(255, 255, 255, 0.55)',
-            },
-          },
-          focus: {
-            background: {
-              'border-color': 'rgba(255, 255, 255, 0.75)',
+              color: '$colors.brandPrimary',
+              'text-shadow': `0px 0px 0.75em ${transparentize(brandPrimary, 0.75)}`,
             },
           },
         },
@@ -113,6 +70,7 @@ export const buildAppTheme = (): ITheme => {
             },
             text: {
               'font-size': '1.2em',
+              'text-shadow': `0px 0px 0.75em ${transparentize(brandPrimary, 0.25)}`,
             },
           },
         },

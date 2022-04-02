@@ -142,7 +142,7 @@ export const HomePage = (): React.ReactElement => {
                       <Image source={profileImageUrl} alternativeText='image' fitType='contain' />
                     </Box>
                   )}
-                  <Button variant='secondary' text={profileImageUrl ? 'change' : 'choose'} onClicked={onChooseProfileImageClicked} />
+                  <Button variant='tertiary' text={profileImageUrl ? 'change' : 'choose'} onClicked={onChooseProfileImageClicked} />
                 </Stack>
                 <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
                   <Text>Frame: </Text>
@@ -151,15 +151,15 @@ export const HomePage = (): React.ReactElement => {
                       <Image source={frameImageUrl} alternativeText='image' fitType='contain' />
                     </Box>
                   )}
-                  <Button variant='secondary' text={frameImageUrl ? 'change' : 'choose'} onClicked={onChooseFrameImageClicked} />
+                  <Button variant='tertiary' text={frameImageUrl ? 'change' : 'choose'} onClicked={onChooseFrameImageClicked} />
                 </Stack>
                 <Spacing variant={PaddingSize.Wide} />
                 {profileImageUrl && (
                   <React.Fragment>
-                    <Button variant='secondary' text={'Download'} iconLeft={<KibaIcon iconId='ion-download' />} iconGutter={PaddingSize.Wide} onClicked={onDownloadClicked} />
-                    <Button variant='secondary' text={'Set Twitter PFP'} iconLeft={<KibaIcon iconId='ion-logo-twitter' />} iconGutter={PaddingSize.Wide} onClicked={onSetTwitterClicked} />
-                    <Button variant='secondary' text={'Set Discord PFP'} iconLeft={<KibaIcon iconId='ion-logo-discord' />} iconGutter={PaddingSize.Wide} onClicked={onSetDiscordClicked} />
-                    <Button variant='secondary' text={'Set ENS PFP'} iconLeft={<KibaIcon iconId='ion-globe' />} iconGutter={PaddingSize.Wide} onClicked={onSetEnsClicked} />
+                    <Button variant='tertiary' text={'Download'} iconLeft={<KibaIcon iconId='ion-download' />} iconGutter={PaddingSize.Wide} onClicked={onDownloadClicked} />
+                    <Button variant='tertiary' text={'Set Twitter PFP'} iconLeft={<KibaIcon iconId='ion-logo-twitter' />} iconGutter={PaddingSize.Wide} onClicked={onSetTwitterClicked} />
+                    <Button variant='tertiary' text={'Set Discord PFP'} iconLeft={<KibaIcon iconId='ion-logo-discord' />} iconGutter={PaddingSize.Wide} onClicked={onSetDiscordClicked} />
+                    <Button variant='tertiary' text={'Set ENS PFP'} iconLeft={<KibaIcon iconId='ion-globe' />} iconGutter={PaddingSize.Wide} onClicked={onSetEnsClicked} />
                   </React.Fragment>
                 )}
               </Stack>
