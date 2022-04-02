@@ -4,8 +4,8 @@ import { Requester } from '@kibalabs/core';
 import { IRoute, Router, useInitialization } from '@kibalabs/core-react';
 import { EveryviewTracker } from '@kibalabs/everyview-tracker';
 import { Head, KibaApp } from '@kibalabs/ui-react';
-import 'react-toastify/dist/ReactToastify.css';
 import { Web3Storage } from 'web3.storage';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { AccountControlProvider } from './AccountContext';
 import { NotdClient } from './client/client';
@@ -24,7 +24,7 @@ const web3StorageClient = new Web3Storage({ token: typeof window !== 'undefined'
 const notdClient = new NotdClient(requester, typeof window !== 'undefined' ? window.KRT_API_URL : undefined);
 
 const theme = buildAppTheme();
-const tracker = new EveryviewTracker('da82fef72d614762b253d0bfe0503226', true);
+const tracker = new EveryviewTracker('26c8cdc5634542969311db49441ce95b', true);
 
 const globals: IGlobals = {
   web3StorageClient,

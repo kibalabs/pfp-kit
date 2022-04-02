@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { truncateStart } from '@kibalabs/core';
 import { Alignment, Box, Direction, Image, LinkBase, PaddingSize, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
 
 import { CollectionToken } from '../client/resources';
@@ -26,18 +25,12 @@ export const TokenView = (props:TokenViewProps): React.ReactElement => {
   }
 
   return (
-    <LinkBase onClicked={onClicked}>
-      <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldWrapItems={true}>
-        <Box variant='tokenCard' shouldClipContent={true}>
-          <Box height='9rem' width='9rem'>
-            <Image source={ imageUrl || defaultImage} alternativeText='image' fitType='contain' />
-          </Box>
-          <Box>
-            <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} padding={PaddingSize.Wide}>
-              <Text variant='bold' alignment={TextAlignment.Center}>{truncateStart(props.token.name, 15)}</Text>
-            </Stack>
-          </Box>
+    <LinkBase onClicked={onClicked} isFullWidth={true}>
+      <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} isFullWidth={true} isFullHeight={true} shouldAddGutters={true} padding={PaddingSize.Narrow}>
+        <Box shouldClipContent={true} height='8em' width='8em'>
+          <Image source={ imageUrl || defaultImage} alternativeText='image' fitType='contain' />
         </Box>
+        <Text alignment={TextAlignment.Center}>{props.token.name}</Text>
       </Stack>
     </LinkBase>
   );
