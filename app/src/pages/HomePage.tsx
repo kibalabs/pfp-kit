@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIntegerUrlQueryState } from '@kibalabs/core-react';
 import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, PaddingSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
@@ -10,7 +11,6 @@ import { ImageCanvasView } from '../components/ImageCanvasView';
 import { ImageChooserDialog } from '../components/ImageChooserDialog';
 import { TwitterInstructionsDialog } from '../components/TwitterInstructionsDialog';
 import { useGlobals } from '../globalsContext';
-import { useIntegerUrlQueryState, useUrlQueryState } from '@kibalabs/core-react';
 
 export type UpdateResult = {
   isSuccess: boolean;
@@ -20,7 +20,6 @@ export type UpdateResult = {
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
   const [shouldEnabledFrames, _] = useIntegerUrlQueryState('shouldEnabledFrames');
-  console.log('shouldEnabledFrames', shouldEnabledFrames);
   const { notdClient, web3StorageClient } = useGlobals();
   const [profileImageUrl, setProfileImageUrl] = React.useState<string>(null);
   const [frameImageUrl, setFrameImageUrl] = React.useState<string>(null);
