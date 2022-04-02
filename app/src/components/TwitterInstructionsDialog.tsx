@@ -35,7 +35,7 @@ export const TwitterInstructionsDialog = (props: ITwitterInstructionsDialogProps
 
   const onSkipSharingClicked = (): void => {
     setHasShared(true);
-  }
+  };
 
   const getShareText = (): string => {
     const shareText = "I've just updated my NFT profile pic with https://pfpkit.xyz, doesn't it look dope! Thanks to the guys from @mdtp_app 🤩";

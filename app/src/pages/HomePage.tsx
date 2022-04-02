@@ -6,12 +6,12 @@ import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, Loa
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
 import { ConnectedAccount } from '../components/ConnectedAccount';
+import { DiscordInstructionsDialog } from '../components/DiscordInstructionsDialog';
+import { EnsInstructionsDialog } from '../components/EnsInstructionsDialog';
 import { Footer } from '../components/Footer';
 import { ImageCanvasView } from '../components/ImageCanvasView';
 import { ImageChooserDialog } from '../components/ImageChooserDialog';
 import { TwitterInstructionsDialog } from '../components/TwitterInstructionsDialog';
-import { DiscordInstructionsDialog } from '../components/DiscordInstructionsDialog';
-import { EnsInstructionsDialog } from '../components/EnsInstructionsDialog';
 import { useGlobals } from '../globalsContext';
 
 export type UpdateResult = {
@@ -145,11 +145,11 @@ export const HomePage = (): React.ReactElement => {
         setIsUploading(false);
       });
     }, 'image/png');
-  }
+  };
 
   const onCopyIpfsUriClicked = (): void => {
     window.navigator.clipboard.writeText(imageIpfsUrl);
-  }
+  };
 
   React.useEffect((): void => {
     setImageIpfsUrl(null);
@@ -255,7 +255,7 @@ export const HomePage = (): React.ReactElement => {
         isOpen={isEnsInstructionsOpen}
         imageIpfsUrl={imageIpfsUrl}
         onCloseClicked={onEnsInstructionsCloseClicked}
-        onDownloadClicked={onDownloadClicked}
+        onUploadClicked={onUploadClicked}
       />
     </ContainingView>
   );

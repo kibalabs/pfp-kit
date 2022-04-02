@@ -2,31 +2,23 @@ import React from 'react';
 
 import { Alignment, Button, Dialog, Direction, KibaIcon, PaddingSize, ResponsiveTextAlignmentView, Spacing, Stack, Text, TextAlignment, useColors, Video } from '@kibalabs/ui-react';
 
-import {useAccount} from '../AccountContext';
+import { useAccount } from '../AccountContext';
 
 interface IEnsInstructionsDialogProps {
   isOpen: boolean;
   imageIpfsUrl: string | null;
   onCloseClicked: () => void;
-  onDownloadClicked: () => void;
+  onUploadClicked: () => void;
 }
 
 export const EnsInstructionsDialog = (props: IEnsInstructionsDialogProps): React.ReactElement => {
   const colors = useColors();
   const account = useAccount();
-  const [hasDownloaded, setHasDownloaded] = React.useState<boolean>(false);
   const [hasUploaded, setHasUploaded] = React.useState<boolean>(false);
   const [hasShared, setHasShared] = React.useState<boolean>(false);
 
-  const onDownloadClicked = (): void => {
-    props.onDownloadClicked();
-    setTimeout((): void => {
-      setHasDownloaded(true);
-    }, 300);
-  };
-
-  const onSkipClicked = (): void => {
-    setHasDownloaded(true);
+  const onUploadClicked = (): void => {
+    props.onUploadClicked();
   };
 
   const onUpdateEnsClicked = (): void => {
@@ -39,7 +31,7 @@ export const EnsInstructionsDialog = (props: IEnsInstructionsDialogProps): React
 
   const onSkipSharingClicked = (): void => {
     setHasShared(true);
-  }
+  };
 
   const getShareText = (): string => {
     const shareText = "I've just updated my NFT profile pic with https://pfpkit.xyz, doesn't it look dope! Thanks to the guys from @mdtp_app 🤩";
@@ -47,7 +39,6 @@ export const EnsInstructionsDialog = (props: IEnsInstructionsDialogProps): React
   };
 
   React.useEffect((): void => {
-    setHasDownloaded(false);
     setHasUploaded(false);
     setHasShared(false);
   }, [props.isOpen]);
@@ -63,23 +54,20 @@ export const EnsInstructionsDialog = (props: IEnsInstructionsDialogProps): React
         <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
           <Text variant='header3'>Pimp your ENS</Text>
           <Spacing />
-          {/* {!hasDownloaded ? (
+          {!props.imageIpfsUrl ? (
             <React.Fragment>
-              <Text variant='bold'>Step 1: save your new PFP</Text>
+              <Text variant='bold'>Step 1: save your new PFP to IPFS</Text>
               <Text>Hot damn, it&apos;s looking goooood 😻</Text>
               <Spacing variant={PaddingSize.Wide} />
-              <Button variant='large-primary' text='Save PFP' onClicked={onDownloadClicked} />
-              <Spacing />
-              <Button variant='small' text='Skip' onClicked={onSkipClicked} />
+              <Button variant='large-primary' text='Save PFP to IPFS' onClicked={onUploadClicked} />
             </React.Fragment>
-          ) : !hasUploaded ? ( */}
-          {!hasUploaded ? (
+          ) : !hasUploaded ? (
             <React.Fragment>
               <Text variant='bold'>Step 1: Configure your ENS</Text>
               <Spacing variant={PaddingSize.Wide} />
               <Video source='/assets/Ens-instructions.mp4' shouldAutoplay={true} shouldLoop={true} shouldShowControls={false} alternativeText='ENS instructions video' />
               <Spacing />
-              <Text>We're assuming you've already got your ENS address set up 👀</Text>
+              <Text>We&apos;re assuming you&apos;ve already got your ENS address set up 👀</Text>
               <Spacing variant={PaddingSize.Wide} />
               <Button variant='large-primary' text='Update Ens Profile' target={`https://app.ens.domains/address/${account?.address}`} onClicked={onUpdateEnsClicked} />
               <Spacing />

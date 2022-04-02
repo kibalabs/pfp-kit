@@ -35,7 +35,7 @@ export const DiscordInstructionsDialog = (props: IDiscordInstructionsDialogProps
 
   const onSkipSharingClicked = (): void => {
     setHasShared(true);
-  }
+  };
 
   const getShareText = (): string => {
     const shareText = "I've just updated my NFT profile pic with https://pfpkit.xyz, doesn't it look dope! Thanks to the guys from @mdtp_app 🤩";
@@ -75,11 +75,11 @@ export const DiscordInstructionsDialog = (props: IDiscordInstructionsDialogProps
               <Video source='/assets/discord-instructions.mp4' shouldAutoplay={true} shouldLoop={true} shouldShowControls={false} alternativeText='Discord instructions video' />
               <Spacing />
               <Text>1. Click on the settings button next to your name in the bottom left of the screen</Text>
-              <Text>2. Click "Edit User Profile"</Text>
+              <Text>2. Click &quot;Edit User Profile&quot;</Text>
               <Text>3. Click on your profile picture</Text>
-              <Text>4. Click "Upload Image"</Text>
-              <Text>5. Choose your picture, click on "Apply"</Text>
-              <Text>6. Click "Save Changes" on the bottom right of your screen</Text>
+              <Text>4. Click &quot;Upload Image&quot;</Text>
+              <Text>5. Choose your picture, click on &quot;Apply&quot;</Text>
+              <Text>6. Click &quot;Save Changes&quot; on the bottom right of your screen</Text>
               <Spacing variant={PaddingSize.Wide} />
               <Button variant='large-primary' text='Update Discord Profile' target='https://discord.com/settings/profile' onClicked={onUpdateDiscordClicked} />
               <Spacing />
@@ -91,7 +91,7 @@ export const DiscordInstructionsDialog = (props: IDiscordInstructionsDialogProps
               <Spacing variant={PaddingSize.Wide} />
               <Button variant='large-primary' text='Tell your friends' target={`https://twitter.com/intent/tweet?text=${getShareText()}`} onClicked={onShareClicked} />
               <Spacing />
-            <Button variant='small' text='Skip' onClicked={onSkipSharingClicked} />
+              <Button variant='small' text='Skip' onClicked={onSkipSharingClicked} />
             </React.Fragment>
           ) : (
             <React.Fragment>
