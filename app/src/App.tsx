@@ -4,8 +4,8 @@ import { Requester } from '@kibalabs/core';
 import { IRoute, Router, useInitialization } from '@kibalabs/core-react';
 import { EveryviewTracker } from '@kibalabs/everyview-tracker';
 import { Head, KibaApp } from '@kibalabs/ui-react';
-import 'react-toastify/dist/ReactToastify.css';
 import { Web3Storage } from 'web3.storage';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { AccountControlProvider } from './AccountContext';
 import { NotdClient } from './client/client';

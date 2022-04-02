@@ -8,7 +8,9 @@ import { ConnectedAccount } from '../components/ConnectedAccount';
 import { Footer } from '../components/Footer';
 import { ImageCanvasView } from '../components/ImageCanvasView';
 import { ImageChooserDialog } from '../components/ImageChooserDialog';
+import { TwitterInstructionsDialog } from '../components/TwitterInstructionsDialog';
 import { useGlobals } from '../globalsContext';
+import { useIntegerUrlQueryState, useUrlQueryState } from '@kibalabs/core-react';
 
 export type UpdateResult = {
   isSuccess: boolean;
@@ -17,12 +19,15 @@ export type UpdateResult = {
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
+  const [shouldEnabledFrames, _] = useIntegerUrlQueryState('shouldEnabledFrames');
+  console.log('shouldEnabledFrames', shouldEnabledFrames);
   const { notdClient, web3StorageClient } = useGlobals();
   const [profileImageUrl, setProfileImageUrl] = React.useState<string>(null);
   const [frameImageUrl, setFrameImageUrl] = React.useState<string>(null);
   const [ownerTokens, setOwnerTokens] = React.useState<CollectionToken[] | undefined | null>(undefined);
   const [isProfileImageChooserOpen, setIsProfileImageChooserOpen] = React.useState<boolean>(false);
   const [isFrameImageChooserOpen, setIsFrameImageChooserOpen] = React.useState<boolean>(false);
+  const [isTwitterInstructionsOpen, setIsTwitterInstructionsOpen] = React.useState<boolean>(false);
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
@@ -65,6 +70,10 @@ export const HomePage = (): React.ReactElement => {
     setIsFrameImageChooserOpen(false);
   };
 
+  const onTwitterInstructionsCloseClicked = (): void => {
+    setIsTwitterInstructionsOpen(false);
+  };
+
   const refreshOwnerTokens = React.useCallback(async (): Promise<void> => {
     setOwnerTokens(undefined);
     notdClient.getOwnerTokens(account?.address).then((tokens: CollectionToken[]): void => {
@@ -86,10 +95,10 @@ export const HomePage = (): React.ReactElement => {
   };
 
   const onSetTwitterClicked = (): void => {
-
+    setIsTwitterInstructionsOpen(true);
   };
 
-  const onSetDiscordClicked = (): void => {
+  const onSetDiscordClicked = async (): Promise<void> => {
     console.error('onSetDiscordClicked not implemented');
   };
 
@@ -144,15 +153,17 @@ export const HomePage = (): React.ReactElement => {
                   )}
                   <Button variant='tertiary' text={profileImageUrl ? 'change' : 'choose'} onClicked={onChooseProfileImageClicked} />
                 </Stack>
-                <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-                  <Text>Frame: </Text>
-                  {frameImageUrl && (
-                    <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
-                      <Image source={frameImageUrl} alternativeText='image' fitType='contain' />
-                    </Box>
-                  )}
-                  <Button variant='tertiary' text={frameImageUrl ? 'change' : 'choose'} onClicked={onChooseFrameImageClicked} />
-                </Stack>
+                {shouldEnabledFrames && (
+                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                    <Text>Frame: </Text>
+                    {frameImageUrl && (
+                      <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
+                        <Image source={frameImageUrl} alternativeText='image' fitType='contain' />
+                      </Box>
+                    )}
+                    <Button variant='tertiary' text={frameImageUrl ? 'change' : 'choose'} onClicked={onChooseFrameImageClicked} />
+                  </Stack>
+                )}
                 <Spacing variant={PaddingSize.Wide} />
                 {profileImageUrl && (
                   <React.Fragment>
@@ -170,8 +181,8 @@ export const HomePage = (): React.ReactElement => {
         <Footer />
       </Stack>
       <ImageChooserDialog
-        isOpen={isProfileImageChooserOpen}
         title='Choose your picture'
+        isOpen={isProfileImageChooserOpen}
         shouldShowFramesOnly={false}
         onCloseClicked={onProfileImageChooserCloseClicked}
         ownerTokens={ownerTokens}
@@ -180,14 +191,19 @@ export const HomePage = (): React.ReactElement => {
         uploadImageToIpfs={uploadImageToIpfs}
       />
       <ImageChooserDialog
-        isOpen={isFrameImageChooserOpen}
         title='Choose your frame'
+        isOpen={isFrameImageChooserOpen}
         shouldShowFramesOnly={true}
         onCloseClicked={onFrameImageChooserCloseClicked}
         ownerTokens={ownerTokens}
         onImageChosen={onFrameImageChosen}
         onRefreshTokensClicked={onRefreshTokensClicked}
         uploadImageToIpfs={uploadImageToIpfs}
+      />
+      <TwitterInstructionsDialog
+        isOpen={isTwitterInstructionsOpen}
+        onCloseClicked={onTwitterInstructionsCloseClicked}
+        onDownloadClicked={onDownloadClicked}
       />
     </ContainingView>
   );

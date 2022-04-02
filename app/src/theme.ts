@@ -6,7 +6,7 @@ export const buildAppTheme = (): ITheme => {
   const brandPrimary = '#B3C7F8';
   const theme = buildTheme({
     colors: {
-      brandPrimary: brandPrimary,
+      brandPrimary,
       background: '#000000',
       text: '#ffffff',
     },
@@ -50,14 +50,24 @@ export const buildAppTheme = (): ITheme => {
         normal: {
           default: {
             background: {
-              'border-color': '#ffffff',
+              'border-color': transparentize(0.6, brandPrimary),
               'border-width': '1px',
               'background-color': 'transparent',
-              'box-shadow': `0px 0px 4px 4px ${transparentize(brandPrimary, 0.2)}`,
+              'box-shadow': `0px 0px 4px 4px ${transparentize(0.8, brandPrimary)}`,
             },
             text: {
               color: '$colors.brandPrimary',
-              'text-shadow': `0px 0px 0.75em ${transparentize(brandPrimary, 0.75)}`,
+              'text-shadow': `0px 0px 0.75em ${transparentize(0.5, brandPrimary)}`,
+            },
+          },
+          hover: {
+            background: {
+              'background-color': '$colors.brandPrimaryClear95',
+            },
+          },
+          press: {
+            background: {
+              'background-color': '$colors.brandPrimaryClear90',
             },
           },
         },
@@ -70,7 +80,7 @@ export const buildAppTheme = (): ITheme => {
             },
             text: {
               'font-size': '1.2em',
-              'text-shadow': `0px 0px 0.75em ${transparentize(brandPrimary, 0.25)}`,
+              'text-shadow': `0px 0px 0.75em ${transparentize(0.25, brandPrimary)}`,
             },
           },
         },

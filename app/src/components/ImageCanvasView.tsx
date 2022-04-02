@@ -34,6 +34,13 @@ export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElemen
         }
       });
       profileImage.setAttribute('src', props.profileImageUrl);
+    } else {
+      const emptyImage = new window.Image();
+      emptyImage.crossOrigin = 'anonymous';
+      emptyImage.addEventListener('load', () => {
+        context.drawImage(emptyImage, 0, 0, 1000, 1000);
+      });
+      emptyImage.setAttribute('src', '/assets/empty.png');
     }
   }, [props.profileImageUrl, props.frameImageUrl, props.canvasRef]);
 
@@ -42,7 +49,7 @@ export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElemen
   }, [redrawImages]);
 
   return (
-    <Box ref={canvasWrapperRef} variant='rounded-dottedBorder' shouldClipContent={true} width='90%' maxWidth='350px' height={`${canvasWrapperSize?.width}px`} maxHeight='350px'>
+    <Box ref={canvasWrapperRef} variant={'rounded'} shouldClipContent={true} width='90%' maxWidth='350px' height={`${canvasWrapperSize?.width}px`} maxHeight='350px'>
       <div style={{ width: '1000px', height: '1000px', transform: canvasWrapperSize?.width ? `scale(${canvasWrapperSize.width / 1000})` : '1', transformOrigin: '0 0', aspectRatio: '1 / 1' }}>
         <canvas
           ref={props.canvasRef}
