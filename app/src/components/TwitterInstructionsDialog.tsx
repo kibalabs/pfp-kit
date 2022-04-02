@@ -8,7 +8,7 @@ interface ITwitterInstructionsDialogProps {
   onDownloadClicked: () => void;
 }
 
-export const TwitterInstructionsDialog = (props: ITwitterInstructionsDialogProps): React.ReactFragment => {
+export const TwitterInstructionsDialog = (props: ITwitterInstructionsDialogProps): React.ReactElement => {
   const colors = useColors();
   const [hasDownloaded, setHasDownloaded] = React.useState<boolean>(false);
   const [hasUploaded, setHasUploaded] = React.useState<boolean>(false);
@@ -30,6 +30,10 @@ export const TwitterInstructionsDialog = (props: ITwitterInstructionsDialogProps
   };
 
   const onShareClicked = (): void => {
+    setHasShared(true);
+  };
+
+  const onSkipSharingClicked = (): void => {
     setHasShared(true);
   };
 
@@ -67,9 +71,10 @@ export const TwitterInstructionsDialog = (props: ITwitterInstructionsDialogProps
           ) : !hasUploaded ? (
             <React.Fragment>
               <Text variant='bold'>Step 2: upload to Twitter</Text>
-              <Text>All you gotta do is click the button below and then drag and drop like in this gif</Text>
               <Spacing variant={PaddingSize.Wide} />
               <Video source='/assets/twitter-instructions.mp4' shouldAutoplay={true} shouldLoop={true} shouldShowControls={false} alternativeText='Twitter instructions video' />
+              <Spacing />
+              <Text>All you gotta do is click the button below and then drag and drop like in this gif</Text>
               <Spacing variant={PaddingSize.Wide} />
               <Button variant='large-primary' text='Update Twitter Profile' target='https://twitter.com/settings/profile' onClicked={onUpdateTwitterClicked} />
               <Spacing />
@@ -81,7 +86,7 @@ export const TwitterInstructionsDialog = (props: ITwitterInstructionsDialogProps
               <Spacing variant={PaddingSize.Wide} />
               <Button variant='large-primary' text='Tell your friends' target={`https://twitter.com/intent/tweet?text=${getShareText()}`} onClicked={onShareClicked} />
               <Spacing />
-              <Button variant='small' text='Skip' onClicked={onSkipClicked} />
+              <Button variant='small' text='Skip' onClicked={onSkipSharingClicked} />
             </React.Fragment>
           ) : (
             <React.Fragment>

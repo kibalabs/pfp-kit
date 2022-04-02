@@ -1,11 +1,13 @@
 import React from 'react';
 
 import { useIntegerUrlQueryState } from '@kibalabs/core-react';
-import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, PaddingSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
+import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, LoadingSpinner, PaddingSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
 import { ConnectedAccount } from '../components/ConnectedAccount';
+import { DiscordInstructionsDialog } from '../components/DiscordInstructionsDialog';
+import { EnsInstructionsDialog } from '../components/EnsInstructionsDialog';
 import { Footer } from '../components/Footer';
 import { ImageCanvasView } from '../components/ImageCanvasView';
 import { ImageChooserDialog } from '../components/ImageChooserDialog';
@@ -19,7 +21,7 @@ export type UpdateResult = {
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
-  const [shouldEnabledFrames, _] = useIntegerUrlQueryState('shouldEnabledFrames');
+  const [isFramesEnabled, _] = useIntegerUrlQueryState('isFramesEnabled');
   const { notdClient, web3StorageClient } = useGlobals();
   const [profileImageUrl, setProfileImageUrl] = React.useState<string>(null);
   const [frameImageUrl, setFrameImageUrl] = React.useState<string>(null);
@@ -27,6 +29,10 @@ export const HomePage = (): React.ReactElement => {
   const [isProfileImageChooserOpen, setIsProfileImageChooserOpen] = React.useState<boolean>(false);
   const [isFrameImageChooserOpen, setIsFrameImageChooserOpen] = React.useState<boolean>(false);
   const [isTwitterInstructionsOpen, setIsTwitterInstructionsOpen] = React.useState<boolean>(false);
+  const [isDiscordInstructionsOpen, setIsDiscordInstructionsOpen] = React.useState<boolean>(false);
+  const [isEnsInstructionsOpen, setIsEnsInstructionsOpen] = React.useState<boolean>(false);
+  const [isUploading, setIsUploading] = React.useState<boolean>(false);
+  const [imageIpfsUrl, setImageIpfsUrl] = React.useState<string | null>(null);
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
@@ -69,10 +75,6 @@ export const HomePage = (): React.ReactElement => {
     setIsFrameImageChooserOpen(false);
   };
 
-  const onTwitterInstructionsCloseClicked = (): void => {
-    setIsTwitterInstructionsOpen(false);
-  };
-
   const refreshOwnerTokens = React.useCallback(async (): Promise<void> => {
     setOwnerTokens(undefined);
     notdClient.getOwnerTokens(account?.address).then((tokens: CollectionToken[]): void => {
@@ -97,12 +99,24 @@ export const HomePage = (): React.ReactElement => {
     setIsTwitterInstructionsOpen(true);
   };
 
+  const onTwitterInstructionsCloseClicked = (): void => {
+    setIsTwitterInstructionsOpen(false);
+  };
+
   const onSetDiscordClicked = async (): Promise<void> => {
-    console.error('onSetDiscordClicked not implemented');
+    setIsDiscordInstructionsOpen(true);
+  };
+
+  const onDiscordInstructionsCloseClicked = (): void => {
+    setIsDiscordInstructionsOpen(false);
   };
 
   const onSetEnsClicked = (): void => {
-    console.error('onSetEnsClicked not implemented');
+    setIsEnsInstructionsOpen(true);
+  };
+
+  const onEnsInstructionsCloseClicked = (): void => {
+    setIsEnsInstructionsOpen(false);
   };
 
   const onDownloadClicked = (): void => {
@@ -119,6 +133,27 @@ export const HomePage = (): React.ReactElement => {
   const uploadImageToIpfs = async (file: File): Promise<string> => {
     return web3StorageClient.put([file], { wrapWithDirectory: false });
   };
+
+  const onUploadClicked = async (): Promise<void> => {
+    if (!canvasRef.current) {
+      return;
+    }
+    setIsUploading(true);
+    canvasRef.current.toBlob((blob: Blob | null): void => {
+      web3StorageClient.put([new File([blob], 'pfp.png')], { wrapWithDirectory: false }).then((cid: string): void => {
+        setImageIpfsUrl(`ipfs://${cid}`);
+        setIsUploading(false);
+      });
+    }, 'image/png');
+  };
+
+  const onCopyIpfsUriClicked = (): void => {
+    window.navigator.clipboard.writeText(imageIpfsUrl);
+  };
+
+  React.useEffect((): void => {
+    setImageIpfsUrl(null);
+  }, [profileImageUrl, frameImageUrl]);
 
   return (
     <ContainingView>
@@ -152,7 +187,7 @@ export const HomePage = (): React.ReactElement => {
                   )}
                   <Button variant='tertiary' text={profileImageUrl ? 'change' : 'choose'} onClicked={onChooseProfileImageClicked} />
                 </Stack>
-                {shouldEnabledFrames && (
+                {isFramesEnabled && (
                   <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
                     <Text>Frame: </Text>
                     {frameImageUrl && (
@@ -166,6 +201,13 @@ export const HomePage = (): React.ReactElement => {
                 <Spacing variant={PaddingSize.Wide} />
                 {profileImageUrl && (
                   <React.Fragment>
+                    {isUploading ? (
+                      <LoadingSpinner />
+                    ) : imageIpfsUrl ? (
+                      <Button variant='tertiary' text={'Copy IPFS URI'} iconLeft={<KibaIcon iconId='ion-copy' />} iconGutter={PaddingSize.Wide} onClicked={onCopyIpfsUriClicked} />
+                    ) : (
+                      <Button variant='tertiary' text={'Upload to IPFS'} iconLeft={<KibaIcon iconId='ion-cloud-upload' />} iconGutter={PaddingSize.Wide} onClicked={onUploadClicked} />
+                    )}
                     <Button variant='tertiary' text={'Download'} iconLeft={<KibaIcon iconId='ion-download' />} iconGutter={PaddingSize.Wide} onClicked={onDownloadClicked} />
                     <Button variant='tertiary' text={'Set Twitter PFP'} iconLeft={<KibaIcon iconId='ion-logo-twitter' />} iconGutter={PaddingSize.Wide} onClicked={onSetTwitterClicked} />
                     <Button variant='tertiary' text={'Set Discord PFP'} iconLeft={<KibaIcon iconId='ion-logo-discord' />} iconGutter={PaddingSize.Wide} onClicked={onSetDiscordClicked} />
@@ -203,6 +245,17 @@ export const HomePage = (): React.ReactElement => {
         isOpen={isTwitterInstructionsOpen}
         onCloseClicked={onTwitterInstructionsCloseClicked}
         onDownloadClicked={onDownloadClicked}
+      />
+      <DiscordInstructionsDialog
+        isOpen={isDiscordInstructionsOpen}
+        onCloseClicked={onDiscordInstructionsCloseClicked}
+        onDownloadClicked={onDownloadClicked}
+      />
+      <EnsInstructionsDialog
+        isOpen={isEnsInstructionsOpen}
+        imageIpfsUrl={imageIpfsUrl}
+        onCloseClicked={onEnsInstructionsCloseClicked}
+        onUploadClicked={onUploadClicked}
       />
     </ContainingView>
   );
