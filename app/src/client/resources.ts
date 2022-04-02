@@ -21,14 +21,16 @@ export class CollectionToken {
   readonly imageUrl: string | null;
   readonly description: string | null;
   readonly attributes: TokenAttribute[];
+  readonly frameImageUrl: string | null;
 
-  public constructor(registryAddress: string, tokenId: string, name: string, imageUrl: string | null, description: string | null, attributes: TokenAttribute[]) {
+  public constructor(registryAddress: string, tokenId: string, name: string, imageUrl: string | null, description: string | null, attributes: TokenAttribute[], frameImageUrl: string | null) {
     this.registryAddress = registryAddress;
     this.tokenId = tokenId;
     this.name = name;
     this.imageUrl = imageUrl;
     this.description = description;
     this.attributes = attributes;
+    this.frameImageUrl = frameImageUrl;
   }
 
   public static fromObject = (obj: Record<string, unknown>): CollectionToken => {
@@ -39,6 +41,7 @@ export class CollectionToken {
       obj.imageUrl ? String(obj.imageUrl) : null,
       obj.description ? String(obj.description) : null,
       (obj.attributes as Record<string, unknown>[]).map((innerObj: Record<string, unknown>) => TokenAttribute.fromObject(innerObj)),
+      obj.frameImageUrl ? String(obj.frameImageUrl) : null,
     );
   };
 }

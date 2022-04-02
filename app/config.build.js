@@ -2,8 +2,8 @@
 const InjectSeoPlugin = require('@kibalabs/build/scripts/plugins/injectSeoPlugin');
 
 const title = 'PFP Kit';
-const description = 'The best way to manage your NFT PFPs';
-const url = 'https://pfpkit.kibalabs.com'
+const description = 'Set your NFT PFP in seconds';
+const url = 'https://pfpkit.xyz'
 const imageUrl = `${url}/assets/banner.png`;
 
 const seoTags = [
@@ -15,7 +15,7 @@ const seoTags = [
   new InjectSeoPlugin.MetaTag('twitter:card', 'summary_large_image'),
   // new InjectSeoPlugin.MetaTag('twitter:site', '@mdtp_app'),
   new InjectSeoPlugin.Tag('link', {rel: 'canonical', href: url}),
-  new InjectSeoPlugin.Tag('link', {rel: 'icon', type: 'image/png', href: '/assets/logo.png'}),
+  new InjectSeoPlugin.Tag('link', {rel: 'icon', type: 'image/png', href: '/assets/icon.png'}),
 ];
 
 module.exports = (config) => {

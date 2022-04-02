@@ -19,3 +19,13 @@ export class GetOwnerTokensResponse extends ResponseData {
     );
   };
 }
+
+export class RefreshAccountTokenOwnershipsRequest extends RequestData {
+}
+
+export class RefreshAccountTokenOwnershipsResponse extends ResponseData {
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  public static fromObject = (obj: Record<string, unknown>): RefreshAccountTokenOwnershipsResponse => {
+    return new RefreshAccountTokenOwnershipsResponse();
+  };
+}

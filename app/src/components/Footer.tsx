@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alignment, Box, Direction, Image, LinkBase, PaddingSize, Stack, Text } from "@kibalabs/ui-react";
+import { Alignment, Box, Direction, Image, LinkBase, PaddingSize, Stack, Text } from '@kibalabs/ui-react';
 
 export const Footer = (): React.ReactElement => {
   return (
@@ -14,4 +14,4 @@ export const Footer = (): React.ReactElement => {
       </Stack>
     </LinkBase>
   );
-}
+};

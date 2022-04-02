@@ -36,7 +36,7 @@ jobs:
           envs: DOCKER_IMAGE,NAME
           script_stop: true
           script: |
-            url="pfpkit.kibalabs.com"
+            url="pfpkit.xyz"
             varsFile=~/.${NAME}.vars
             docker pull ${DOCKER_IMAGE}
             docker stop ${NAME} && docker rm ${NAME} || true

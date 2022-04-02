@@ -15,4 +15,11 @@ export class NotdClient extends ServiceClient {
     const response = await this.makeRequest(method, path, request, Endpoints.GetOwnerTokensResponse);
     return response.tokens;
   };
+
+  public refreshAccountTokenOwnerships = async (accountAddress: string): Promise<void> => {
+    const method = RestMethod.POST;
+    const path = `v1/accounts/${accountAddress}/refresh-token-ownerships`;
+    const request = new Endpoints.RefreshAccountTokenOwnershipsRequest();
+    await this.makeRequest(method, path, request, Endpoints.RefreshAccountTokenOwnershipsResponse);
+  };
 }

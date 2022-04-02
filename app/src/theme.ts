@@ -109,11 +109,11 @@ export const buildAppTheme = (): ITheme => {
         normal: {
           default: {
             background: {
-              "border-radius": '1em',
+              'border-radius': '1em',
             },
             text: {
-              "font-size": '1.2em',
-            }
+              'font-size': '1.2em',
+            },
           },
         },
       },

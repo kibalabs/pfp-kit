@@ -1,54 +1,55 @@
 import React from 'react';
 
-import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, LoadingSpinner, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 import { useSize } from '@kibalabs/core-react';
+import { Box } from '@kibalabs/ui-react';
 
 interface IImageCanvasViewProps {
-  profileImageUrl?: string;
-  frameImageUrl?: string;
+  canvasRef: React.RefObject<HTMLCanvasElement | null>;
+  profileImageUrl?: string | null;
+  frameImageUrl?: string | null;
 }
 
 export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElement => {
-  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const canvasWrapperRef = React.useRef<HTMLDivElement | null>(null);
   const canvasWrapperSize = useSize(canvasWrapperRef.current);
 
   const redrawImages = React.useCallback((): void => {
-    const context = canvasRef.current?.getContext('2d');
+    const context = props.canvasRef.current?.getContext('2d');
     if (!context) {
       return;
     }
     context.clearRect(0, 0, 1000, 1000);
     if (props.profileImageUrl) {
       const profileImage = new window.Image();
-      profileImage.addEventListener("load", function () {
+      profileImage.crossOrigin = 'anonymous';
+      profileImage.addEventListener('load', () => {
         context.drawImage(profileImage, 0, 0, 1000, 1000);
         if (props.frameImageUrl) {
           const frameImage = new window.Image();
-          frameImage.addEventListener("load", function () {
+          frameImage.crossOrigin = 'anonymous';
+          frameImage.addEventListener('load', () => {
             context.drawImage(frameImage, 0, 0, 1000, 1000);
           });
-          frameImage.setAttribute("src", props.frameImageUrl);
+          frameImage.setAttribute('src', props.frameImageUrl);
         }
       });
-      profileImage.setAttribute("src", props.profileImageUrl);
+      profileImage.setAttribute('src', props.profileImageUrl);
     }
-  }, [props.profileImageUrl, canvasRef]);
+  }, [props.profileImageUrl, props.frameImageUrl, props.canvasRef]);
 
   React.useEffect((): void => {
     redrawImages();
   }, [redrawImages]);
 
-  console.log('canvasWrapperSize.width', canvasWrapperSize?.width);
   return (
-    <Box ref={canvasWrapperRef} variant='rounded-bordered' shouldClipContent={true} width='350px' maxWidth='90%' height='350px' maxHeight='70%'>
-      <div style={{width: '1000px', height: '1000px', transform: canvasWrapperSize?.width ? `scale(${canvasWrapperSize.width / 1000})` : '1', transformOrigin: '0 0'}}>
+    <Box ref={canvasWrapperRef} variant='rounded-dottedBorder' shouldClipContent={true} width='90%' maxWidth='350px' height={`${canvasWrapperSize?.width}px`} maxHeight='350px'>
+      <div style={{ width: '1000px', height: '1000px', transform: canvasWrapperSize?.width ? `scale(${canvasWrapperSize.width / 1000})` : '1', transformOrigin: '0 0', aspectRatio: '1 / 1' }}>
         <canvas
-          ref={canvasRef}
+          ref={props.canvasRef}
           width='1000px'
           height='1000px'
         />
       </div>
     </Box>
-  )
-}
+  );
+};

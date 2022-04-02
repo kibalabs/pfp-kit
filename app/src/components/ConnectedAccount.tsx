@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Alignment, Box, Button, ContainingView, Direction, IconButton, Image, KibaIcon, LayerContainer, LinkBase, LoadingSpinner, PaddingSize, ResponsiveHidingView, ScreenSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
 import { truncateMiddle } from '@kibalabs/core';
-import { useAccount, Account } from '../AccountContext';
+import { Alignment, Box, Direction, Image, Stack, Text } from '@kibalabs/ui-react';
+
+import { Account } from '../AccountContext';
 
 interface IConnectedAccountProps {
   account: Account;
@@ -17,5 +18,5 @@ export const ConnectedAccount = (props: IConnectedAccountProps): React.ReactElem
       </Box>
       <Text>{truncateMiddle(props.account.address, 10)}</Text>
     </Stack>
-  )
-}
+  );
+};
