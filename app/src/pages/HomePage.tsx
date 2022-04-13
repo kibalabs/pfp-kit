@@ -155,6 +155,10 @@ export const HomePage = (): React.ReactElement => {
     setImageIpfsUrl(null);
   }, [profileImageUrl, frameImageUrl]);
 
+  const getShareText = (): string => {
+    return encodeURIComponent('I found the quickest way to update my NFT PFP - PFP Kit by the guys from @mdtp_app https://pfpkit.xyz 🙌');
+  };
+
   return (
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} paddingTop={PaddingSize.Wide2} paddingBottom={PaddingSize.Wide} paddingHorizontal={PaddingSize.Wide}>
@@ -221,6 +225,7 @@ export const HomePage = (): React.ReactElement => {
           </React.Fragment>
         )}
         <Stack.Item growthFactor={2} shrinkFactor={1} />
+        <Button variant='share' text='Share the love' iconLeft={<KibaIcon iconId='ion-logo-twitter' />} target={`https://twitter.com/intent/tweet?text=${getShareText()}`} />
         <Footer />
       </Stack>
       <ImageChooserDialog
