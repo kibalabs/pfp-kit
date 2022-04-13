@@ -156,7 +156,7 @@ export const HomePage = (): React.ReactElement => {
   }, [profileImageUrl, frameImageUrl]);
 
   const getShareText = (): string => {
-    return encodeURIComponent('Check out the PFP-KIT app by the guys from @mdtp_app https://pfpkit.xyz');
+    return encodeURIComponent('I found the quickest way to update my NFT PFP - PFP Kit by the guys from @mdtp_app https://pfpkit.xyz 🙌');
   };
 
   return (
