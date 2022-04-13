@@ -165,6 +165,8 @@ export const HomePage = (): React.ReactElement => {
             </Stack.Item>
             <Image source='/assets/logo.svg' alternativeText='PFP Kit Logo' />
             <Spacing variant={PaddingSize.Wide} />
+            <Text variant='header2'>Set your NFT PFP in seconds</Text>
+            <Spacing variant={PaddingSize.Wide3} />
             <Button variant='primary-large' text= 'Connect Your Wallet' onClicked={onConnectWalletClicked} />
           </React.Fragment>
         ) : (
