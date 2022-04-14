@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useIntegerUrlQueryState } from '@kibalabs/core-react';
-import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, LoadingSpinner, PaddingSize, Spacing, Stack, Text } from '@kibalabs/ui-react';
+import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, LoadingSpinner, PaddingSize, Spacing, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
@@ -169,8 +169,8 @@ export const HomePage = (): React.ReactElement => {
             </Stack.Item>
             <Image source='/assets/logo.svg' alternativeText='PFP Kit Logo' />
             <Spacing variant={PaddingSize.Wide} />
-            <Text variant='header2'>Set your NFT PFP in seconds</Text>
-            <Spacing variant={PaddingSize.Wide3} />
+            <Text alignment={TextAlignment.Center} variant='header2'>Set your NFT PFP in seconds</Text>
+            <Spacing variant={PaddingSize.Wide2} />
             <Button variant='primary-large' text= 'Connect Your Wallet' onClicked={onConnectWalletClicked} />
           </React.Fragment>
         ) : (
