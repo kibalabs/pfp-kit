@@ -14,6 +14,9 @@ export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElemen
   const canvasWrapperSize = useSize(canvasWrapperRef.current);
 
   const redrawImages = React.useCallback((): void => {
+    if (!canvasWrapperRef.current) {
+      return;
+    }
     const context = props.canvasRef.current?.getContext('2d');
     if (!context) {
       return;
@@ -42,7 +45,7 @@ export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElemen
       });
       emptyImage.setAttribute('src', '/assets/empty.png');
     }
-  }, [props.profileImageUrl, props.frameImageUrl, props.canvasRef]);
+  }, [props.profileImageUrl, props.frameImageUrl, props.canvasRef, canvasWrapperRef]);
 
   React.useEffect((): void => {
     redrawImages();

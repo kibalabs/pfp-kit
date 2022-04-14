@@ -225,7 +225,7 @@ export const HomePage = (): React.ReactElement => {
           </React.Fragment>
         )}
         <Stack.Item growthFactor={2} shrinkFactor={1} />
-        <Button variant='share' text='Share the love' iconLeft={<KibaIcon iconId='ion-logo-twitter' />} target={`https://twitter.com/intent/tweet?text=${getShareText()}`} />
+        <Button text='Share the love' iconLeft={<KibaIcon iconId='ion-logo-twitter' />} target={`https://twitter.com/intent/tweet?text=${getShareText()}`} />
         <Footer />
       </Stack>
       <ImageChooserDialog
