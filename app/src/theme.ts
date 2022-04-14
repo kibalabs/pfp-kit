@@ -29,6 +29,9 @@ export const buildAppTheme = (): ITheme => {
         'margin-bottom': '0.25em',
         'text-shadow': '0px 0px 5px #F0F0F0',
       },
+      wrapped: {
+        'overflow-wrap': 'anywhere',
+      },
     },
     boxes: {
       card: {

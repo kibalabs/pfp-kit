@@ -4,6 +4,7 @@ import { Requester } from '@kibalabs/core';
 import { IRoute, Router, useInitialization } from '@kibalabs/core-react';
 import { EveryviewTracker } from '@kibalabs/everyview-tracker';
 import { Head, KibaApp } from '@kibalabs/ui-react';
+import { ToastContainer } from 'react-toastify';
 import { Web3Storage } from 'web3.storage';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -50,6 +51,7 @@ export const App = (): React.ReactElement => {
           <Router routes={routes} />
         </GlobalsProvider>
       </AccountControlProvider>
+      <ToastContainer />
     </KibaApp>
   );
 };

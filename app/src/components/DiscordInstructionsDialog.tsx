@@ -38,7 +38,7 @@ export const DiscordInstructionsDialog = (props: IDiscordInstructionsDialogProps
   };
 
   const getShareText = (): string => {
-    const shareText = "I've just updated my NFT profile pic with https://pfpkit.xyz, doesn't it look dope! Thanks to the guys from @mdtp_app 🤩";
+    const shareText = "I've just updated my Discord NFT profile pic with https://pfpkit.xyz, it looks dope! Thanks to the guys from @mdtp_app 🤩";
     return encodeURIComponent(shareText);
   };
 
