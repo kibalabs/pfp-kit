@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AccountControlProvider } from './AccountContext';
 import { NotdClient } from './client/client';
 import { GlobalsProvider, IGlobals } from './globalsContext';
+import { FramesInfoPage } from './pages/FramesInfoPage';
 import { HomePage } from './pages/HomePage';
 import { buildAppTheme } from './theme';
 
@@ -38,7 +39,13 @@ export const App = (): React.ReactElement => {
   });
 
   const routes: IRoute[] = [
-    { path: '/', page: HomePage },
+    { path: '/',
+      page: HomePage,
+      subRoutes: [
+      // { path: '/partners', page: PartnersPage },
+      // { path: '/about', page: AboutPage },
+        { path: '/frames', page: FramesInfoPage },
+      ] },
   ];
 
   return (

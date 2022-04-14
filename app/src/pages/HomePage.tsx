@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useIntegerUrlQueryState } from '@kibalabs/core-react';
-import { Alignment, Box, Button, ContainingView, Direction, Image, KibaIcon, LoadingSpinner, PaddingSize, Spacing, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
+import { SubRouterOutlet, useIntegerUrlQueryState, useLocation, useNavigator } from '@kibalabs/core-react';
+import { Alignment, Box, Button, ContainingView, Dialog, Direction, Image, KibaIcon, LoadingSpinner, PaddingSize, Spacing, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
@@ -21,6 +21,8 @@ export type UpdateResult = {
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
+  const navigator = useNavigator();
+  const location = useLocation();
   const [isFramesEnabled, _] = useIntegerUrlQueryState('isFramesEnabled');
   const { notdClient, web3StorageClient } = useGlobals();
   const [profileImageUrl, setProfileImageUrl] = React.useState<string>(null);
@@ -159,6 +161,15 @@ export const HomePage = (): React.ReactElement => {
     return encodeURIComponent('I found the quickest way to update my NFT PFP - PFP Kit by the guys from @mdtp_app https://pfpkit.xyz 🙌');
   };
 
+  const onCloseSubpageClicked = (): void => {
+    navigator.navigateTo('/');
+  };
+
+  const isAboutSubpageShowing = location.pathname.includes('/about');
+  const isPartnersSubpageShowing = location.pathname.includes('/partners');
+  const isFramesInfoSubpageShowing = location.pathname.includes('/frames');
+  const isSubpageShowing = isAboutSubpageShowing || isPartnersSubpageShowing || isFramesInfoSubpageShowing;
+
   return (
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} paddingTop={PaddingSize.Wide2} paddingBottom={PaddingSize.Wide} paddingHorizontal={PaddingSize.Wide}>
@@ -264,6 +275,16 @@ export const HomePage = (): React.ReactElement => {
         onCloseClicked={onEnsInstructionsCloseClicked}
         onUploadClicked={onUploadClicked}
       />
+      {isSubpageShowing && (
+        <Dialog
+          isOpen={true}
+          onCloseClicked={onCloseSubpageClicked}
+          maxWidth='750px'
+          maxHeight='90%'
+        >
+          <SubRouterOutlet />
+        </Dialog>
+      )}
     </ContainingView>
   );
 };
