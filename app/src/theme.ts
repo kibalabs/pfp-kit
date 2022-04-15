@@ -29,6 +29,12 @@ export const buildAppTheme = (): ITheme => {
         'margin-bottom': '0.25em',
         'text-shadow': '0px 0px 5px #F0F0F0',
       },
+      header4: {
+        'font-size': '2.0rem',
+        'font-weight': '500',
+        'margin-bottom': '0.25em',
+      },
+
       wrapped: {
         'overflow-wrap': 'anywhere',
       },
@@ -46,6 +52,24 @@ export const buildAppTheme = (): ITheme => {
         'border-style': 'dashed',
         'border-width': '0.20em',
         'border-color': '#FFFFFF',
+      },
+    },
+    pills: {
+      primary: {
+        normal: {
+          default: {
+            background: {
+              'border-color': '#26637A',
+              'border-width': '3px',
+              'background-color': 'transparent',
+              'border-radius': '10px',
+              padding: '5px',
+            },
+            text: {
+              color: '#26637A',
+            },
+          },
+        },
       },
     },
     buttons: {
