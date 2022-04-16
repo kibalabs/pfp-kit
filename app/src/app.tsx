@@ -46,8 +46,7 @@ export const App = (props: IAppProps): React.ReactElement => {
     { path: '/',
       page: HomePage,
       subRoutes: [
-      // { path: '/partners', page: PartnersPage },
-      // { path: '/about', page: AboutPage },
+        // { path: '/partners', page: PartnersPage },
         { path: '/frames', page: FramesInfoPage },
       ] },
   ];
