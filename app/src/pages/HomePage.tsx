@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SubRouterOutlet, useIntegerUrlQueryState, useLocation, useNavigator } from '@kibalabs/core-react';
+import { SubRouterOutlet, useLocation, useNavigator } from '@kibalabs/core-react';
 import { Alignment, Box, Button, ContainingView, Dialog, Direction, Image, KibaIcon, LoadingSpinner, PaddingSize, Spacing, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
@@ -23,7 +23,6 @@ export const HomePage = (): React.ReactElement => {
   const account = useAccount();
   const navigator = useNavigator();
   const location = useLocation();
-  const [isFramesEnabled, _] = useIntegerUrlQueryState('isFramesEnabled');
   const { notdClient, web3StorageClient } = useGlobals();
   const [profileImageUrl, setProfileImageUrl] = React.useState<string>(null);
   const [frameImageUrl, setFrameImageUrl] = React.useState<string>(null);
@@ -204,17 +203,15 @@ export const HomePage = (): React.ReactElement => {
                   )}
                   <Button variant='tertiary' text={profileImageUrl ? 'change' : 'choose'} onClicked={onChooseProfileImageClicked} />
                 </Stack>
-                {isFramesEnabled && (
-                  <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-                    <Text>Frame: </Text>
-                    {frameImageUrl && (
-                      <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
-                        <Image source={frameImageUrl} alternativeText='image' fitType='contain' />
-                      </Box>
-                    )}
-                    <Button variant='tertiary' text={frameImageUrl ? 'change' : 'choose'} onClicked={onChooseFrameImageClicked} />
-                  </Stack>
-                )}
+                <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
+                  <Text>Frame: </Text>
+                  {frameImageUrl && (
+                    <Box variant='rounded' shouldClipContent={true} width='1.5rem' height='1.5rem'>
+                      <Image source={frameImageUrl} alternativeText='image' fitType='contain' />
+                    </Box>
+                  )}
+                  <Button variant='tertiary' text={frameImageUrl ? 'change' : 'choose'} onClicked={onChooseFrameImageClicked} />
+                </Stack>
                 <Spacing variant={PaddingSize.Wide} />
                 {profileImageUrl && (
                   <React.Fragment>

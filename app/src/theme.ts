@@ -7,6 +7,7 @@ export const buildAppTheme = (): ITheme => {
   const theme = buildTheme({
     colors: {
       brandPrimary,
+      brandSecondary: '#2D86A3',
       background: '#000000',
       text: '#ffffff',
     },
@@ -29,6 +30,12 @@ export const buildAppTheme = (): ITheme => {
         'margin-bottom': '0.25em',
         'text-shadow': '0px 0px 5px #F0F0F0',
       },
+      header4: {
+        'font-size': '2.0rem',
+        'font-weight': '500',
+        'margin-bottom': '0.25em',
+      },
+
       wrapped: {
         'overflow-wrap': 'anywhere',
       },
@@ -46,6 +53,44 @@ export const buildAppTheme = (): ITheme => {
         'border-style': 'dashed',
         'border-width': '0.20em',
         'border-color': '#FFFFFF',
+      },
+    },
+    pills: {
+      default: {
+        normal: {
+          default: {
+            background: {
+              'background-color': 'transparent',
+              'border-radius': '0.5em',
+            },
+          },
+        },
+      },
+      info: {
+        normal: {
+          default: {
+            background: {
+              'border-color': '$colors.brandSecondary',
+            },
+            text: {
+              color: '$colors.brandSecondary',
+            },
+          },
+        },
+      },
+      small: {
+        normal: {
+          default: {
+            text: {
+              'font-size': '0.7em',
+              'font-weight': '600',
+            },
+            background: {
+              'border-width': '0.11em',
+              padding: '0.1em 1em',
+            },
+          },
+        },
       },
     },
     buttons: {

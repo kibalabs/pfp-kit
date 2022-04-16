@@ -13,6 +13,7 @@ import { NotdClient } from './client/client';
 import { GlobalsProvider, IGlobals } from './globalsContext';
 import { FramesInfoPage } from './pages/FramesInfoPage';
 import { HomePage } from './pages/HomePage';
+import { PartnersPage } from './pages/PartnersPage';
 import { buildAppTheme } from './theme';
 
 declare global {
@@ -46,7 +47,7 @@ export const App = (props: IAppProps): React.ReactElement => {
     { path: '/',
       page: HomePage,
       subRoutes: [
-        // { path: '/partners', page: PartnersPage },
+        { path: '/partners', page: PartnersPage },
         { path: '/frames', page: FramesInfoPage },
       ] },
   ];

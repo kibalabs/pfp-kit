@@ -56,10 +56,10 @@ export const ImageChooserDialog = (props: IImageChooserDialogProps): React.React
             <React.Fragment>
               {relevantTokens.length === 0 ? (
                 <React.Fragment>
-                  <Spacing varian={PaddingSize.Wide} />
+                  <Spacing variant={PaddingSize.Wide} />
                   <Text>None of your NFTs support frames yet 😿</Text>
-                  <MarkdownText source='For an awesome example, grab one from [MillionDollarTokenPage](https://milliondollartokenpage.com) 😘' />
-                  <Spacing varian={PaddingSize.Wide2} />
+                  <MarkdownText source='For an awesome example, grab one from [our amazing partners](/partners) 😘' />
+                  <Spacing variant={PaddingSize.Wide2} />
                 </React.Fragment>
               ) : (
                 <EqualGrid childSizeResponsive={{ base: 6, medium: 4, large: 3 }} shouldAddGutters={true}>
