@@ -38,6 +38,20 @@ module.exports = (config) => {
       new InjectSeoPlugin.MetaTag('twitter:site', '@mdtp_app'),
       new InjectSeoPlugin.Tag('link', {rel: 'icon', type: 'image/png', href: '/assets/icon.png'}),
     ],
+  }, {
+    path: '/partners',
+    filename: 'partners.html',
+    seoTags: [
+      new InjectSeoPlugin.MetaTag('description', description),
+      new InjectSeoPlugin.Tag('meta', {property: 'og:type', content: 'website'}),
+      new InjectSeoPlugin.Tag('meta', {property: 'og:title', content: `Our Partners | ${title}`}),
+      new InjectSeoPlugin.Tag('meta', {property: 'og:description', content: ''}),
+      new InjectSeoPlugin.Tag('meta', {property: 'og:image', content: imageUrl}),
+      new InjectSeoPlugin.Tag('meta', {property: 'og:url', content: `${url}/frames`}),
+      new InjectSeoPlugin.MetaTag('twitter:card', 'summary_large_image'),
+      new InjectSeoPlugin.MetaTag('twitter:site', '@mdtp_app'),
+      new InjectSeoPlugin.Tag('link', {rel: 'icon', type: 'image/png', href: '/assets/icon.png'}),
+    ],
   }];
   return config;
 };

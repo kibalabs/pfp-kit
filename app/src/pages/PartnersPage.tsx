@@ -19,18 +19,18 @@ export const PartnersPage = (): React.ReactElement => {
       title: 'Mint Calendar',
       description: 'Access to perks such as WL opportunities from future bluechips, community events, skillshare\'s and community information sharing.',
     },
-    {
-      imageUrl: '/assets/cameopass.png',
-      type: 'IRL EVENTS',
-      title: 'Cameo Pass',
-      description: 'Access to Cameo in the metaverse, along with exclusive art from Burnt Toast, Vinnie Hager, and Luke McGarry.',
-    },
+    // {
+    //   imageUrl: '/assets/cameopass.png',
+    //   type: 'IRL EVENTS',
+    //   title: 'Cameo Pass',
+    //   description: 'Access to Cameo in the metaverse, along with exclusive art from Burnt Toast, Vinnie Hager, and Luke McGarry.',
+    // },
   ];
 
   return (
-    <Stack direction={Direction.Vertical} isFullWidth={true} childAlignment={Alignment.Fill}>
+    <Stack direction={Direction.Vertical} isFullWidth={true} childAlignment={Alignment.Fill} shouldAddGutters={true}>
       <Text variant='header2' alignment={TextAlignment.Center}>Our Partners</Text>
-      <Spacing variant={PaddingSize.Wide2} />
+      <Spacing variant={PaddingSize.Wide} />
       {partners.map((partner, index: number) : React.ReactElement => (
         <PartnersView
           key={index}

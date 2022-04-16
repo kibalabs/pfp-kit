@@ -7,6 +7,7 @@ export const buildAppTheme = (): ITheme => {
   const theme = buildTheme({
     colors: {
       brandPrimary,
+      brandSecondary: '#2D86A3',
       background: '#000000',
       text: '#ffffff',
     },
@@ -55,18 +56,38 @@ export const buildAppTheme = (): ITheme => {
       },
     },
     pills: {
-      primary: {
+      default: {
         normal: {
           default: {
             background: {
-              'border-color': '#26637A',
-              'border-width': '3px',
               'background-color': 'transparent',
-              'border-radius': '10px',
-              padding: '5px',
+              'border-radius': '0.5em',
+            },
+          },
+        },
+      },
+      info: {
+        normal: {
+          default: {
+            background: {
+              'border-color': '$colors.brandSecondary',
             },
             text: {
-              color: '#26637A',
+              color: '$colors.brandSecondary',
+            },
+          },
+        },
+      },
+      small: {
+        normal: {
+          default: {
+            text: {
+              'font-size': '0.7em',
+              'font-weight': '600',
+            },
+            background: {
+              'border-width': '0.11em',
+              padding: '0.1em 1em',
             },
           },
         },
