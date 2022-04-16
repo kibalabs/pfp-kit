@@ -58,7 +58,7 @@ export const ImageChooserDialog = (props: IImageChooserDialogProps): React.React
                 <React.Fragment>
                   <Spacing varian={PaddingSize.Wide} />
                   <Text>None of your NFTs support frames yet 😿</Text>
-                  <MarkdownText source='For an awesome example, grab one from [MillionDollarTokenPage](https://milliondollartokenpage.com) 😘' />
+                  <MarkdownText source='For an awesome example, grab one from [our amazing partners](/partners) 😘' />
                   <Spacing varian={PaddingSize.Wide2} />
                 </React.Fragment>
               ) : (
