@@ -3,7 +3,7 @@ import React from 'react';
 import { Requester } from '@kibalabs/core';
 import { IRoute, Router, useInitialization } from '@kibalabs/core-react';
 import { EveryviewTracker } from '@kibalabs/everyview-tracker';
-import { Head, KibaApp } from '@kibalabs/ui-react';
+import { Head, IHeadRootProviderProps, KibaApp } from '@kibalabs/ui-react';
 import { ToastContainer } from 'react-toastify';
 import { Web3Storage } from 'web3.storage';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,7 +34,11 @@ const globals: IGlobals = {
   notdClient,
 };
 
-export const App = (): React.ReactElement => {
+export interface IAppProps extends IHeadRootProviderProps {
+  staticPath?: string;
+}
+
+export const App = (props: IAppProps): React.ReactElement => {
   useInitialization((): void => {
     tracker.trackApplicationOpen();
   });
@@ -44,19 +48,18 @@ export const App = (): React.ReactElement => {
       page: HomePage,
       subRoutes: [
         { path: '/partners', page: PartnersPage },
-        // { path: '/about', page: AboutPage },
         { path: '/frames', page: FramesInfoPage },
       ] },
   ];
 
   return (
-    <KibaApp theme={theme} background={{ linearGradient: 'rgb(0, 0, 0), rgb(25, 24, 37)' }}>
+    <KibaApp theme={theme} background={{ linearGradient: 'rgb(0, 0, 0), rgb(25, 24, 37)' }} setHead={props.setHead}>
       <Head headId='app'>
         <title>PFP Kit</title>
       </Head>
       <AccountControlProvider>
         <GlobalsProvider globals={globals}>
-          <Router routes={routes} />
+          <Router staticPath={props.staticPath} routes={routes} />
         </GlobalsProvider>
       </AccountControlProvider>
       <ToastContainer />

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "build-react-app --config-modifier ./config.build.js",
+    "build-static": "build-react-app-static --config-modifier ./config.build.js",
     "start": "build-react-app --config-modifier ./config.build.js --start",
     "start-dev": "build-react-app --config-modifier ./config.build.js --start --dev",
     "clean": "rm -rf ./node_modules ./package-lock.json ./dist",
@@ -14,10 +15,10 @@
   "dependencies": {
     "@ethersproject/abstract-provider": "5.6.0",
     "@kibalabs/core": "0.5.7",
-    "@kibalabs/core-react": "0.8.0",
+    "@kibalabs/core-react": "0.9.1-next.0",
     "@kibalabs/everyview-tracker": "0.3.1",
     "@kibalabs/everyview-tracker-react": "0.3.1",
-    "@kibalabs/ui-react": "0.9.7-next.16",
+    "@kibalabs/ui-react": "0.9.8-next.0",
     "@metamask/detect-provider": "1.2.0",
     "ethers": "^5.6.2",
     "polished": "^4.1.4",
