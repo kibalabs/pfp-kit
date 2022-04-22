@@ -33,16 +33,16 @@ Here are some example frames we really like:
 
 **3. Host your frame somewhere**
 
-We need to get a UIR that's publicly accessible for your frame's image.
+We need to get a URI that's publicly accessible for your frame's image.
 
-We suggest using (NFT Storage by Protocol Labs)[https://nft.storage], it's so easy to use!
+We suggest using (NFT Storage by Protocol Labs)[https://nft.storage], it's decentralised and so easy to use!
 
-You could of course use any image hosting service as long as you get a URI back.
+You could of course use any image hosting service at all as long as you get a URI back.
 
 **4. Update your NFT metadata**
 
 This is easy.
-You will created used a JSON file when you created your NFT.
+You will have created a JSON metadata file when you created your NFT.
 It will have had things like \`name\`, \`description\`, and \`image\`.
 All we're gonna do is add another field called \`frameImage\` with the value set to the URL from step 3.
 
@@ -63,8 +63,8 @@ You need to use the URI from step 5 and submit the transaction.
 
 **7. Tell everyone you know**
 
-Your done 🎉.
-Sometime it takes a few days for the metadata to be updated on PFPKit so [reach out to us](mailto:hello@milliondollartokenpage.com?cc=arthur@kibalabs.com;krishan@kibalabs.com&subject=I've%20uploaded%20some%20frames%20to%20my%20NFT%20project) and we'll do it for you straight away.
+You're done! 🎉 
+Sometimes it takes a few days for the metadata to be updated on PFPKit so [reach out to us](mailto:hello@milliondollartokenpage.com?cc=arthur@kibalabs.com;krishan@kibalabs.com&subject=I've%20uploaded%20some%20frames%20to%20my%20NFT%20project) and we'll do it for you straight away.
 
 Now go update your PFP and tell all your friends!
 
