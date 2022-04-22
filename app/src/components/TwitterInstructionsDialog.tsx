@@ -57,7 +57,7 @@ export const TwitterInstructionsDialog = (props: ITwitterInstructionsDialogProps
     >
       <ResponsiveTextAlignmentView alignment={TextAlignment.Center}>
         <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-          <Text variant='header3'>Pimp your Twitter</Text>
+          <Text variant='header2'>Pimp your Twitter</Text>
           <Spacing />
           {!hasDownloaded ? (
             <React.Fragment>

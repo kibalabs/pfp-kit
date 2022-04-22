@@ -65,7 +65,7 @@ export const EnsInstructionsDialog = (props: IEnsInstructionsDialogProps): React
     >
       <ResponsiveTextAlignmentView alignment={TextAlignment.Center}>
         <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-          <Text variant='header3'>Pimp your ENS</Text>
+          <Text variant='header2'>Pimp your ENS</Text>
           <Spacing />
           {!props.imageIpfsUrl ? (
             <React.Fragment>
