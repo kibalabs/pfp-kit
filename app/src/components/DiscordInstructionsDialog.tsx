@@ -57,7 +57,7 @@ export const DiscordInstructionsDialog = (props: IDiscordInstructionsDialogProps
     >
       <ResponsiveTextAlignmentView alignment={TextAlignment.Center}>
         <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
-          <Text variant='header3'>Pimp your Discord</Text>
+          <Text variant='header2'>Pimp your Discord</Text>
           <Spacing />
           {!hasDownloaded ? (
             <React.Fragment>

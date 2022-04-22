@@ -9,7 +9,7 @@ Frames are the perfect way for DAO members, alpha-group members and NFT communit
 
 You can read about why we created frames and how we plan to grow them [on our blog](https://blog.milliondollartokenpage.com/frames/).
 
-#### Cool, so how do you get I frame for my community?
+### Cool, so how do you get a frame for your community?
 
 **TL;DR**: All you have to do is add a field called \`frameImage\` to your metadata.
 [Here's ours for example]().
@@ -46,7 +46,9 @@ You will have created a JSON metadata file when you created your NFT.
 It will have had things like \`name\`, \`description\`, and \`image\`.
 All we're gonna do is add another field called \`frameImage\` with the value set to the URL from step 3.
 
-As an example [here's ours from MDTP]().
+If you have an ERC-721 NFT then you can actually give each NFT a different frame. As an example [here's ours from MDTP]().
+
+If you have an ERC-1155 NFT, each holder will get the same frame. As an example [here's our partner MintCalendar's]().
 
 **5. Upload the metadata**
 
@@ -63,12 +65,12 @@ You need to use the URI from step 5 and submit the transaction.
 
 **7. Tell everyone you know**
 
-You're done! 🎉 
+You're done! 🎉
 Sometimes it takes a few days for the metadata to be updated on PFPKit so [reach out to us](mailto:hello@milliondollartokenpage.com?cc=arthur@kibalabs.com;krishan@kibalabs.com&subject=I've%20uploaded%20some%20frames%20to%20my%20NFT%20project) and we'll do it for you straight away.
 
 Now go update your PFP and tell all your friends!
 
-#### This sounds hard, can you help?
+### This sounds hard, can you help?
 
 Yep, [reach out to us](mailto:hello@milliondollartokenpage.com?cc=arthur@kibalabs.com;krishan@kibalabs.com&subject=I%20want%20you%20to%20build%20my%20Frames).
 For a small fee, we'd even be happy to help get all the technical details set up.

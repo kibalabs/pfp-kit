@@ -25,19 +25,22 @@ export const buildAppTheme = (): ITheme => {
         color: '$colors.textClear50',
       },
       header3: {
-        'font-size': '2.0rem',
-        'font-weight': '500',
-        'margin-bottom': '0.25em',
-        'text-shadow': '0px 0px 5px #F0F0F0',
+        'font-size': '1.5rem',
+        'font-weight': '800',
       },
-      header4: {
-        'font-size': '2.0rem',
-        'font-weight': '500',
-        'margin-bottom': '0.25em',
-      },
-
       wrapped: {
         'overflow-wrap': 'anywhere',
+      },
+    },
+    prettyTexts: {
+      header3: {
+        normal: {
+          default: {
+            text: {
+              margin: '2em 0 0.5em 0',
+            },
+          },
+        },
       },
     },
     boxes: {

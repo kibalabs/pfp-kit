@@ -47,7 +47,7 @@ export const ImageChooserDialog = (props: IImageChooserDialogProps): React.React
     >
       <ResponsiveTextAlignmentView alignment={TextAlignment.Center}>
         <Stack direction={Direction.Vertical} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} defaultGutter={PaddingSize.Wide}>
-          <Text variant='header3'>{props.title}</Text>
+          <Text variant='header2'>{props.title}</Text>
           {props.ownerTokens === undefined ? (
             <LoadingSpinner />
           ) : props.ownerTokens === null ? (
