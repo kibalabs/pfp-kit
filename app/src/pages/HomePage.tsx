@@ -156,10 +156,6 @@ export const HomePage = (): React.ReactElement => {
     setImageIpfsUrl(null);
   }, [profileImageUrl, frameImageUrl]);
 
-  const getShareText = (): string => {
-    return encodeURIComponent('I found the quickest way to update my NFT PFP - PFP Kit by the guys from @mdtp_app https://pfpkit.xyz 🙌');
-  };
-
   const onCloseSubpageClicked = (): void => {
     navigator.navigateTo('/');
   };
@@ -233,7 +229,6 @@ export const HomePage = (): React.ReactElement => {
           </React.Fragment>
         )}
         <Stack.Item growthFactor={2} shrinkFactor={1} />
-        <Button text='Share the love' iconLeft={<KibaIcon iconId='ion-logo-twitter' />} target={`https://twitter.com/intent/tweet?text=${getShareText()}`} />
         <Footer />
       </Stack>
       <ImageChooserDialog

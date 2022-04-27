@@ -7,7 +7,7 @@ const CONTENT = `
 
 Frames are the perfect way for DAO members, alpha-group members and NFT communities to show their allegiance to the cause without replacing their whole profile picture
 
-You can read about why we created frames and how we plan to grow them [on our blog](https://blog.milliondollartokenpage.com/frames/).
+You can read about why we created frames and how we plan to grow them [on our blog](https://blog.milliondollartokenpage.com/frames).
 
 ### Cool, so how do you get a frame for your community?
 
@@ -29,7 +29,7 @@ We think circular frames work best, but it's totally up to you.
 
 Here are some example frames we really like:
 
-![Frames images]()
+![Frames images](/assets)
 
 **3. Host your frame somewhere**
 
@@ -48,7 +48,7 @@ All we're gonna do is add another field called \`frameImage\` with the value set
 
 If you have an ERC-721 NFT then you can actually give each NFT a different frame. As an example [here's ours from MDTP]().
 
-If you have an ERC-1155 NFT, each holder will get the same frame. As an example [here's our partner MintCalendar's]().
+If you have an ERC-1155 NFT, each holder will get the same frame. As an example [here's our partner MintCalendar's](https://ipfs.io/ipfs/bafybeicij5pjwvwueqqnr7m5krlt3rnb5ldysiwl7ubhcg7i4bq6syqanu/0.json).
 
 **5. Upload the metadata**
 

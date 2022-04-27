@@ -15,7 +15,7 @@ export const PartnersPage = (): React.ReactElement => {
     },
     {
       imageUrl: '/assets/mc.png',
-      type: 'ALPHA GROUP',
+      type: 'COMMUNITY',
       title: 'Mint Calendar',
       description: 'Access to perks such as WL opportunities from future bluechips, community events, skillshare\'s and community information sharing.',
     },
