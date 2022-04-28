@@ -11,6 +11,7 @@ import { EnsInstructionsDialog } from '../components/EnsInstructionsDialog';
 import { Footer } from '../components/Footer';
 import { ImageCanvasView } from '../components/ImageCanvasView';
 import { ImageChooserDialog } from '../components/ImageChooserDialog';
+import { MessageDialog } from '../components/MessageDialog';
 import { TwitterInstructionsDialog } from '../components/TwitterInstructionsDialog';
 import { useGlobals } from '../globalsContext';
 
@@ -25,6 +26,8 @@ export const HomePage = (): React.ReactElement => {
   const location = useLocation();
   const { notdClient, web3StorageClient } = useGlobals();
   const [profileImageUrl, setProfileImageUrl] = React.useState<string>(null);
+  const [isSkipDialogShowing, setIsSkipDialogShowing] = React.useState<boolean>(false);
+  const [skippedWalletConnection, setSkippedWalletConnection] = React.useState<boolean>(false);
   const [frameImageUrl, setFrameImageUrl] = React.useState<string>(null);
   const [ownerTokens, setOwnerTokens] = React.useState<CollectionToken[] | undefined | null>(undefined);
   const [isProfileImageChooserOpen, setIsProfileImageChooserOpen] = React.useState<boolean>(false);
@@ -40,6 +43,20 @@ export const HomePage = (): React.ReactElement => {
 
   const onConnectWalletClicked = async (): Promise<void> => {
     await onLinkAccountsClicked();
+  };
+
+  const onSkipWalletClicked = (): void => {
+    setIsSkipDialogShowing(true);
+  };
+
+  const onSkipConfirmClicked = (): void => {
+    setSkippedWalletConnection(true);
+    setIsSkipDialogShowing(false);
+  };
+
+  const onSkipCancelClicked = (): void => {
+    setSkippedWalletConnection(false);
+    setIsSkipDialogShowing(false);
   };
 
   const onProfileImageChosen = (imageUrl: string): void => {
@@ -168,7 +185,7 @@ export const HomePage = (): React.ReactElement => {
   return (
     <ContainingView>
       <Stack direction={Direction.Vertical} isFullHeight={true} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} paddingTop={PaddingSize.Wide2} paddingBottom={PaddingSize.Wide} paddingHorizontal={PaddingSize.Wide}>
-        {!account ? (
+        {!account && !skippedWalletConnection ? (
           <React.Fragment>
             <Stack.Item growthFactor={1} shrinkFactor={1}>
               <Spacing variant={PaddingSize.Wide2} />
@@ -178,12 +195,16 @@ export const HomePage = (): React.ReactElement => {
             <Text alignment={TextAlignment.Center} variant='header2'>Set your NFT PFP in seconds</Text>
             <Spacing variant={PaddingSize.Wide2} />
             <Button variant='primary-large' text= 'Connect Your Wallet' onClicked={onConnectWalletClicked} />
+            <Spacing variant={PaddingSize.Default} />
+            <Button variant='small' text= 'Skip and upload manually' onClicked={onSkipWalletClicked} />
           </React.Fragment>
         ) : (
           <React.Fragment>
             <Stack.Item growthFactor={1} shrinkFactor={1} />
             <Image source='/assets/logo.svg' alternativeText='PFP Kit Logo' />
-            <ConnectedAccount account={account} />
+            {account && (
+              <ConnectedAccount account={account} />
+            )}
             <Stack.Item growthFactor={1} shrinkFactor={1}>
               <Spacing variant={PaddingSize.Wide2} />
             </Stack.Item>
@@ -234,6 +255,7 @@ export const HomePage = (): React.ReactElement => {
       <ImageChooserDialog
         title='Choose your picture'
         isOpen={isProfileImageChooserOpen}
+        isConnected={account != null}
         shouldShowFramesOnly={false}
         onCloseClicked={onProfileImageChooserCloseClicked}
         ownerTokens={ownerTokens}
@@ -244,6 +266,7 @@ export const HomePage = (): React.ReactElement => {
       <ImageChooserDialog
         title='Choose your frame'
         isOpen={isFrameImageChooserOpen}
+        isConnected={account != null}
         shouldShowFramesOnly={true}
         onCloseClicked={onFrameImageChooserCloseClicked}
         ownerTokens={ownerTokens}
@@ -266,6 +289,14 @@ export const HomePage = (): React.ReactElement => {
         imageIpfsUrl={imageIpfsUrl}
         onCloseClicked={onEnsInstructionsCloseClicked}
         onUploadClicked={onUploadClicked}
+      />
+      <MessageDialog
+        isOpen={isSkipDialogShowing}
+        message={'PFP Kit works best when you connect your account.\n\nIt&apos;s completely safe - PFP Kit will never ask you to sign a transaction or anything of the like.\n\nBy connecting your wallet we can quickly verify all the NFTs you own and streamline your experience down to just a few seconds ⚡⚡'}
+        confirmButtonText='Skip anyway'
+        cancelButtonText='Cancel'
+        onCloseClicked={onSkipCancelClicked}
+        onConfirmClicked={onSkipConfirmClicked}
       />
       {isSubpageShowing && (
         <Dialog
