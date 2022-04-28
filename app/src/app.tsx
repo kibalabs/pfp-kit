@@ -40,6 +40,7 @@ export interface IAppProps extends IHeadRootProviderProps {
 
 export const App = (props: IAppProps): React.ReactElement => {
   useInitialization((): void => {
+    tracker.initialize();
     tracker.trackApplicationOpen();
   });
 
