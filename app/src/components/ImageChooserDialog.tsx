@@ -10,6 +10,7 @@ interface IImageChooserDialogProps {
   isOpen: boolean;
   title: string;
   ownerTokens: CollectionToken[] | undefined | null;
+  isConnected: boolean;
   shouldShowFramesOnly: boolean;
   onRefreshTokensClicked: () => void;
   onImageChosen: (imageUrl: string) => void;
@@ -57,8 +58,21 @@ export const ImageChooserDialog = (props: IImageChooserDialogProps): React.React
               {relevantTokens.length === 0 ? (
                 <React.Fragment>
                   <Spacing variant={PaddingSize.Wide} />
-                  <Text>None of your NFTs support frames yet 😿</Text>
-                  <MarkdownText source='For an awesome example, grab one from [our amazing partners](/partners) 😘' />
+                  {!props.isConnected ? (
+                    <React.Fragment>
+                      <Text>You haven&apos;t connected your wallet 😿</Text>
+                      <Text>You&apos;ll need to an image upload manually</Text>
+                    </React.Fragment>
+                  ) : props.shouldShowFramesOnly ? (
+                    <React.Fragment>
+                      <Text>None of your NFTs support frames yet 😿</Text>
+                      <MarkdownText source='For an awesome example, grab one from [our amazing partners](/partners) 😘' />
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <Text>You don&apos;t seem to have any NFTs 😿</Text>
+                    </React.Fragment>
+                  )}
                   <Spacing variant={PaddingSize.Wide2} />
                 </React.Fragment>
               ) : (
@@ -82,7 +96,9 @@ export const ImageChooserDialog = (props: IImageChooserDialogProps): React.React
               ) : (
                 <Dropzone onFilesChosen={onImageFilesChosen} />
               )}
-              <Button variant='small' onClicked={props.onRefreshTokensClicked} text='Refresh Tokens' />
+              {props.isConnected && (
+                <Button variant='small' onClicked={props.onRefreshTokensClicked} text='Refresh Tokens' />
+              )}
             </React.Fragment>
           )}
         </Stack>

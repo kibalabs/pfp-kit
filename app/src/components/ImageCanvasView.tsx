@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSize } from '@kibalabs/core-react';
+import { useRenderedRef, useSize } from '@kibalabs/core-react';
 import { Box } from '@kibalabs/ui-react';
 
 interface IImageCanvasViewProps {
@@ -10,7 +10,7 @@ interface IImageCanvasViewProps {
 }
 
 export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElement => {
-  const canvasWrapperRef = React.useRef<HTMLDivElement | null>(null);
+  const [canvasWrapperRef] = useRenderedRef<HTMLDivElement | null>();
   const canvasWrapperSize = useSize(canvasWrapperRef.current);
 
   const redrawImages = React.useCallback((): void => {
@@ -53,7 +53,7 @@ export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElemen
 
   return (
     <Box ref={canvasWrapperRef} variant={'rounded'} shouldClipContent={true} width='90%' maxWidth='350px' height={`${canvasWrapperSize?.width}px`} maxHeight='350px'>
-      <div style={{ width: '1000px', height: '1000px', transform: canvasWrapperSize?.width ? `scale(${canvasWrapperSize.width / 1000})` : '1', transformOrigin: '0 0', aspectRatio: '1 / 1' }}>
+      <div style={{ width: '1000px', height: '1000px', transform: `scale(${canvasWrapperSize?.width ? canvasWrapperSize.width / 1000 : 0})`, transformOrigin: '0 0', aspectRatio: '1 / 1' }}>
         <canvas
           ref={props.canvasRef}
           width='1000px'
