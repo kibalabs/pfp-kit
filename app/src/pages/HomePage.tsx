@@ -292,7 +292,7 @@ export const HomePage = (): React.ReactElement => {
       />
       <MessageDialog
         isOpen={isSkipDialogShowing}
-        message={'PFP Kit works best when you connect your account.\n\nIt&apos;s completely safe - PFP Kit will never ask you to sign a transaction or anything of the like.\n\nBy connecting your wallet we can quickly verify all the NFTs you own and streamline your experience down to just a few seconds ⚡⚡'}
+        message={'PFP Kit works best when you connect your account.\n\nIt&apos;s completely safe - PFP Kit will never ask you to sign a transaction so there&apos;s no risk involved, the connection is just to find your public information on the blockchain.\n\nBy connecting your wallet we can quickly verify all the NFTs you own and streamline your experience down to just a few seconds ⚡⚡'}
         confirmButtonText='Skip anyway'
         cancelButtonText='Cancel'
         onCloseClicked={onSkipCancelClicked}
