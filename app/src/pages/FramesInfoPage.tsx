@@ -29,7 +29,7 @@ We think circular frames work best, but it's totally up to you.
 
 Here are some example frames we really like:
 
-![Frames images](/assets)
+![Frames images](/assets/framed-nfts.png)
 
 **3. Host your frame somewhere**
 
@@ -46,7 +46,7 @@ You will have created a JSON metadata file when you created your NFT.
 It will have had things like \`name\`, \`description\`, and \`image\`.
 All we're gonna do is add another field called \`frameImage\` with the value set to the URL from step 3.
 
-If you have an ERC-721 NFT then you can actually give each NFT a different frame. As an example [here's ours from MDTP]().
+If you have an ERC-721 NFT then you can actually give each NFT a different frame. As an example [here's ours from MDTP](https://ipfs.io/ipfs/QmZbMDBzhpiK4nHYkbk9ksAmaZt4oB4Ukk9xJid3jzeLiT/711.json).
 
 If you have an ERC-1155 NFT, each holder will get the same frame. As an example [here's our partner MintCalendar's](https://ipfs.io/ipfs/bafybeicij5pjwvwueqqnr7m5krlt3rnb5ldysiwl7ubhcg7i4bq6syqanu/0.json).
 
