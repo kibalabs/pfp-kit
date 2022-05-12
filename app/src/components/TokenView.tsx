@@ -32,7 +32,7 @@ export const TokenView = (props:TokenViewProps): React.ReactElement => {
         </Box>
         <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} isFullWidth={true} shouldAddGutters={true}>
           <Text alignment={TextAlignment.Center}>{props.token.name}</Text>
-          <IconButton icon={<KibaIcon iconId='ion-open-outline' />} target={`https://nft.tokenhunt.io/collections/${props.token.registryAddress}/tokens/${props.token.tokenId}`} />
+          <IconButton icon={<KibaIcon variant='small' iconId='ion-open-outline' />} target={`https://nft.tokenhunt.io/collections/${props.token.registryAddress}/tokens/${props.token.tokenId}`} />
         </Stack>
       </Stack>
     </LinkBase>
