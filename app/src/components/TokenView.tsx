@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alignment, Box, Direction, Image, LinkBase, PaddingSize, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
+import { Alignment, Box, Direction, IconButton, Image, KibaIcon, LinkBase, PaddingSize, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
 
 import { CollectionToken } from '../client/resources';
 
@@ -30,7 +30,10 @@ export const TokenView = (props:TokenViewProps): React.ReactElement => {
         <Box shouldClipContent={true} height='8em' width='8em'>
           <Image source={ imageUrl || defaultImage} alternativeText='image' fitType='contain' />
         </Box>
-        <Text alignment={TextAlignment.Center}>{props.token.name}</Text>
+        <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} isFullWidth={true} shouldAddGutters={true}>
+          <Text alignment={TextAlignment.Center}>{props.token.name}</Text>
+          <IconButton icon={<KibaIcon variant='small' iconId='ion-open-outline' />} target={`https://nft.tokenhunt.io/collections/${props.token.registryAddress}/tokens/${props.token.tokenId}`} />
+        </Stack>
       </Stack>
     </LinkBase>
   );
