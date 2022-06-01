@@ -96,7 +96,13 @@ export const HomePage = (): React.ReactElement => {
   const refreshOwnerTokens = React.useCallback(async (): Promise<void> => {
     setOwnerTokens(undefined);
     notdClient.getOwnerTokens(account?.address).then((tokens: CollectionToken[]): void => {
-      setOwnerTokens(tokens);
+      const updatedTokens = tokens.map((token: CollectionToken): CollectionToken => {
+        if (token.registryAddress === '0xe0176bA60efddb29Cac5b15338C9962dAee9de0c') {
+          token.frameImageUrl = '/assets/frame-premint.png';
+        }
+        return token;
+      });
+      setOwnerTokens(updatedTokens);
     }).catch((error: unknown): void => {
       console.error(error);
       setOwnerTokens(null);
