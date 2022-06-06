@@ -102,6 +102,12 @@ export const HomePage = (): React.ReactElement => {
           if (token.registryAddress === '0xe0176bA60efddb29Cac5b15338C9962dAee9de0c') {
             tokenFrameImageUrl = '/assets/frame-premint.png';
           }
+          if (token.registryAddress === '0xf64e6fB725f04042b5197e2529b84be4a925902C' && token.tokenId === '1') {
+            tokenFrameImageUrl = '/assets/frame-zeneca1.png';
+          }
+          if (token.registryAddress === '0xf64e6fB725f04042b5197e2529b84be4a925902C' && token.tokenId === '333') {
+            tokenFrameImageUrl = '/assets/frame-zeneca2.png';
+          }
         }
         // eslint-disable-next-line no-param-reassign
         token.frameImageUrl = tokenFrameImageUrl;
