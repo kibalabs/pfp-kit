@@ -9,13 +9,13 @@ export const Footer = (): React.ReactElement => {
 
   return (
     <Stack direction={Direction.Vertical} shouldAddGutters={true} childAlignment={Alignment.Center}>
-      <LinkBase target='https://milliondollartokenpage.com?ref=pfpkit'>
+      <LinkBase target='https://www.tokenpage.xyz?ref=pfpkit'>
         <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true} padding={PaddingSize.Default}>
           <Text>Made by</Text>
           <Box shouldClipContent={true} width='1.5rem' height='1.5rem'>
-            <Image source='/assets/mdtp.png' alternativeText='MDTP Logo' fitType='contain' />
+            <Image source='/assets/tokenpage.png' alternativeText='TokenPage Logo' fitType='contain' />
           </Box>
-          <Text> MillionDollarTokenPage</Text>
+          <Text>Token Page</Text>
         </Stack>
       </LinkBase>
       <Stack direction={Direction.Horizontal} childAlignment={Alignment.Center} contentAlignment={Alignment.Center} shouldAddGutters={true}>
