@@ -22,9 +22,9 @@ export type UpdateResult = {
 }
 
 const HARDCODED_FRAMES = {
-  'zenacademy': '/assets/frame-zeneca1.png',
-  '333': '/assets/frame-zeneca2.png',
-}
+  zenacademy: '/assets/frame-zeneca1.png',
+  333: '/assets/frame-zeneca2.png',
+};
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
