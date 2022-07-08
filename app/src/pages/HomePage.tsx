@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { SubRouterOutlet, useLocation, useNavigator } from '@kibalabs/core-react';
+import { SubRouterOutlet, useLocation, useNavigator, useUrlQueryState } from '@kibalabs/core-react';
 import { Alignment, Box, Button, ContainingView, Dialog, Direction, Image, KibaIcon, LoadingSpinner, PaddingSize, Spacing, Stack, Text, TextAlignment } from '@kibalabs/ui-react';
+import { ethers } from 'ethers';
 
 import { useAccount, useOnLinkAccountsClicked } from '../AccountContext';
 import { CollectionToken } from '../client/resources';
@@ -19,6 +20,11 @@ export type UpdateResult = {
   isSuccess: boolean;
   message: string;
 }
+
+const HARDCODED_FRAMES = {
+  zenacademy: '/assets/frame-zeneca1.png',
+  333: '/assets/frame-zeneca2.png',
+};
 
 export const HomePage = (): React.ReactElement => {
   const account = useAccount();
@@ -38,6 +44,8 @@ export const HomePage = (): React.ReactElement => {
   const [isUploading, setIsUploading] = React.useState<boolean>(false);
   const [imageIpfsUrl, setImageIpfsUrl] = React.useState<string | null>(null);
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const [pictureValue] = useUrlQueryState('picture');
+  const [frameValue] = useUrlQueryState('frame');
 
   const onLinkAccountsClicked = useOnLinkAccountsClicked();
 
@@ -123,6 +131,43 @@ export const HomePage = (): React.ReactElement => {
   React.useEffect((): void => {
     refreshOwnerTokens();
   }, [refreshOwnerTokens]);
+
+  const applyDefaults = React.useCallback((): void => {
+    if (frameValue && !frameImageUrl) {
+      if (frameValue.startsWith('https://') || frameValue.startsWith('ipfs://')) {
+        setFrameImageUrl(frameValue);
+      } else if (Object.keys(HARDCODED_FRAMES).includes(frameValue)) {
+        setFrameImageUrl(HARDCODED_FRAMES[frameValue]);
+      } else if (ownerTokens && frameValue.includes(':')) {
+        // eslint-disable-next-line prefer-const
+        let [registryAddress, tokenId] = frameValue.split(':');
+        registryAddress = ethers.utils.getAddress(registryAddress);
+        const frameToken = ownerTokens.find((token: CollectionToken): boolean => {
+          return token.registryAddress === registryAddress && token.tokenId === tokenId;
+        });
+        if (frameToken && frameToken.frameImageUrl) {
+          setFrameImageUrl(frameToken.frameImageUrl);
+        }
+      }
+    }
+    if (pictureValue && !profileImageUrl) {
+      if (ownerTokens && pictureValue.includes(':')) {
+        // eslint-disable-next-line prefer-const
+        let [registryAddress, tokenId] = pictureValue.split(':');
+        registryAddress = ethers.utils.getAddress(registryAddress);
+        const pictureToken = ownerTokens.find((token: CollectionToken): boolean => {
+          return token.registryAddress === registryAddress && token.tokenId === tokenId;
+        });
+        if (pictureToken && pictureToken.imageUrl) {
+          setFrameImageUrl(pictureToken.imageUrl);
+        }
+      }
+    }
+  }, [frameValue, frameImageUrl, pictureValue, profileImageUrl, ownerTokens]);
+
+  React.useEffect((): void => {
+    applyDefaults();
+  }, [applyDefaults]);
 
   const onRefreshTokensClicked = async (): Promise<void> => {
     setOwnerTokens(undefined);
