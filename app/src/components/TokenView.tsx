@@ -21,7 +21,7 @@ export const TokenView = (props:TokenViewProps): React.ReactElement => {
 
   let imageUrl = props.token?.imageUrl || defaultImage;
   if (imageUrl?.startsWith('ipfs://')) {
-    imageUrl = imageUrl.replace('ipfs://', 'https://kibalabs.mypinata.cloud/ipfs/');
+    imageUrl = imageUrl.replace('ipfs://', 'https://pablo-images.kibalabs.com/v1/ipfs/');
   }
 
   return (
