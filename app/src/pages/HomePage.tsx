@@ -70,7 +70,7 @@ export const HomePage = (): React.ReactElement => {
   const onProfileImageChosen = (imageUrl: string): void => {
     let resolvedImageUrl = imageUrl;
     if (resolvedImageUrl.startsWith('ipfs://')) {
-      resolvedImageUrl = resolvedImageUrl.replace('ipfs://', 'https://kibalabs.mypinata.cloud/ipfs/');
+      resolvedImageUrl = resolvedImageUrl.replace('ipfs://', 'https://pablo-images.kibalabs.com/v1/ipfs/');
     }
     setProfileImageUrl(resolvedImageUrl);
     setIsProfileImageChooserOpen(false);
@@ -79,7 +79,7 @@ export const HomePage = (): React.ReactElement => {
   const onFrameImageChosen = (imageUrl: string): void => {
     let resolvedImageUrl = imageUrl;
     if (resolvedImageUrl.startsWith('ipfs://')) {
-      resolvedImageUrl = resolvedImageUrl.replace('ipfs://', 'https://kibalabs.mypinata.cloud/ipfs/');
+      resolvedImageUrl = resolvedImageUrl.replace('ipfs://', 'https://pablo-images.kibalabs.com/v1/ipfs/');
     }
     setFrameImageUrl(resolvedImageUrl);
     setIsFrameImageChooserOpen(false);
