@@ -24,6 +24,7 @@ export type UpdateResult = {
 const HARDCODED_FRAMES = {
   zenacademy: '/assets/frame-zeneca1.png',
   333: '/assets/frame-zeneca2.png',
+  breach: '/assets/frame-breach.png',
 };
 
 export const HomePage = (): React.ReactElement => {
