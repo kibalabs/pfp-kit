@@ -24,12 +24,12 @@ export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElemen
     context.clearRect(0, 0, 1000, 1000);
     if (props.profileImageUrl) {
       const profileImage = new window.Image();
-      profileImage.crossOrigin = 'anonymous';
+      // profileImage.crossOrigin = 'use-credentials';
       profileImage.addEventListener('load', () => {
         context.drawImage(profileImage, 0, 0, 1000, 1000);
         if (props.frameImageUrl) {
           const frameImage = new window.Image();
-          frameImage.crossOrigin = 'anonymous';
+          // frameImage.crossOrigin = 'use-credentials';
           frameImage.addEventListener('load', () => {
             context.drawImage(frameImage, 0, 0, 1000, 1000);
           });
@@ -39,7 +39,7 @@ export const ImageCanvasView = (props: IImageCanvasViewProps): React.ReactElemen
       profileImage.setAttribute('src', props.profileImageUrl);
     } else {
       const emptyImage = new window.Image();
-      emptyImage.crossOrigin = 'anonymous';
+      // emptyImage.crossOrigin = 'use-credentials';
       emptyImage.addEventListener('load', () => {
         context.drawImage(emptyImage, 0, 0, 1000, 1000);
       });

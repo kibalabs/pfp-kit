@@ -1,5 +1,5 @@
 # Stage 1: build
-FROM node:16.13.0-stretch as build
+FROM node:18.2.0 as build
 
 WORKDIR /app
 
